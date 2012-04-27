@@ -1,0 +1,4 @@
+services:
+  eventbrite:
+    class: SFBCN\EventbriteBundle\Eventbrite\Service
+    arguments: [%app_key%, %user_key%]
