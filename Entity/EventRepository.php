@@ -4,7 +4,7 @@ namespace SFBCN\EventbriteBundle\Entity;
 
 use SFBCN\EventbriteBundle\Eventbrite\AbstractRepository;
 
-cla EventRepository extends AbstractRepository
+cl EventRepository extends AbstractRepository
 {
     /**
      * Gets an event by its ID
