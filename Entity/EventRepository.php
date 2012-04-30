@@ -25,7 +25,8 @@ class EventRepository extends AbstractRepository
      * @param string $entity
      * @return object
      */
-    public function map($entity) {
+    public function map($entity)
+    {
 
     }
 }
