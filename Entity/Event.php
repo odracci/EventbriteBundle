@@ -674,7 +674,7 @@ class Event
             'start_date'                    => $this->getStartDate()->format('Y-m-d H:i:s'),
             'status'                        => $this->getStatus(),
             'text_color'                    => $this->getTextColor(),
-            'timezone'                      => $this->getTimezone(),
+            'timezone'                      => $this->getTimezone()->getName(),
             'title_text_color'              => $this->getTitleTextColor(),
             'venue_id'                      => $this->getVenue()->getId()
         );
