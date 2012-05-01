@@ -31,7 +31,6 @@
         <command name="event_get" method="GET" uri="/event_get">
             <doc>This method returns the identified event resource along with any associated ticket, venue, or organizer profile objects. Only public events details are returned if no additional authentication tokens are supplied.</doc>
             <param name="id" doc="The ID of the requested event." required="true" />
-            <paren name="user_key" required="false" />
         </command>
     </commands>
 </client>

@@ -2,7 +2,7 @@
 
 namespace SFBCN\EventbriteBundle\Eventbrite;
 
-use Guzzle\Http\Client;
+use Guzzle\Service\Client;
 
 /**
  * The base repository class to inject the Guzzle client
@@ -12,20 +12,20 @@ use Guzzle\Http\Client;
 abstract class AbstractRepository implements RepositoryInterface
 {
     /**
-     * @var \Guzzle\Http\Client
+     * @var \Guzzle\Service\Client
      */
     private $client;
 
     /**
-     * @param \Guzzle\Http\Client $client
+     * @param \Guzzle\Service\Client $client
      */
-    public function setClient(\Guzzle\Http\Client $client)
+    public function setClient($client)
     {
         $this->client = $client;
     }
 
     /**
-     * @return \Guzzle\Http\Client
+     * @return \Guzzle\Service\Client
      */
     public function getClient()
     {
@@ -34,9 +34,9 @@ abstract class AbstractRepository implements RepositoryInterface
 
     /**
      * Class contructor
-     * @param \Guzzle\Http\Client $client
+     * @param \Guzzle\Service\Client $client
      */
-    public function __construct(\Guzzle\Http\Client $client)
+    public function __construct($client)
     {
         $this->setClient($client);
     }

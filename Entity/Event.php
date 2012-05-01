@@ -9,8 +9,12 @@ namespace SFBCN\EventbriteBundle\Entity;
  */
 class Event
 {
-    const STATUS_DRAFT = 'draft';
-    const STATUS_LIVE  = 'live';
+    const STATUS_DRAFT     = 'Draft';
+    const STATUS_LIVE      = 'Live';
+    const STATUS_COMPLETED = 'Completed';
+
+    const PRIVACY_PUBLIC  = 'Public';
+    const PRIVACY_PRIVATE = 'Private';
 
     /**
      * The event ID
@@ -40,9 +44,14 @@ class Event
     private $endDate;
 
     /**
-     * @var string
+     * @var \DateTimeZone
      */
     private $timezone;
+
+    /**
+     * @var string
+     */
+    private $url;
 
     /**
      * @var int
@@ -55,7 +64,7 @@ class Event
     private $personalizedUrl;
 
     /**
-     * @var \SFBCN\EventbriteBundle\Eventbrite\Venue
+     * @var \SFBCN\EventbriteBundle\Entity\Venue
      */
     private $venue;
 
@@ -83,16 +92,6 @@ class Event
      * @var string
      */
     private $status;
-
-    /**
-     * @var string
-     */
-    private $customHeader;
-
-    /**
-     * @var string
-     */
-    private $customFooter;
 
     /**
      * @var string
@@ -138,6 +137,26 @@ class Event
      * @var string
      */
     private $boxHeaderTextColor;
+
+    /**
+     * @var \DateTime
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     */
+    private $modified;
+
+    /**
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @var int
+     */
+    private $numAtendee;
 
     /**
      * @param string $backgroundColor
@@ -265,38 +284,6 @@ class Event
     public function getCurrency()
     {
         return $this->currency;
-    }
-
-    /**
-     * @param string $customFooter
-     */
-    public function setCustomFooter($customFooter)
-    {
-        $this->customFooter = $customFooter;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCustomFooter()
-    {
-        return $this->customFooter;
-    }
-
-    /**
-     * @param string $customHeader
-     */
-    public function setCustomHeader($customHeader)
-    {
-        $this->customHeader = $customHeader;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCustomHeader()
-    {
-        return $this->customHeader;
     }
 
     /**
@@ -476,15 +463,15 @@ class Event
     }
 
     /**
-     * @param string $timezone
+     * @param \DateTimeZone $timezone
      */
-    public function setTimezone($timezone)
+    public function setTimezone(\DateTimeZone $timezone)
     {
         $this->timezone = $timezone;
     }
 
     /**
-     * @return string
+     * @return \DateTimeZone
      */
     public function getTimezone()
     {
@@ -540,47 +527,161 @@ class Event
     }
 
     /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param \DateTime $created
+     */
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param \DateTime $modified
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $logo
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param string $logoSsl
+     */
+    public function setLogoSsl($logoSsl)
+    {
+        $this->logoSsl = $logoSsl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogoSsl()
+    {
+        return $this->logoSsl;
+    }
+
+    /**
+     * @param int $numAtendee
+     */
+    public function setNumAtendee($numAtendee)
+    {
+        $this->numAtendee = $numAtendee;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumAtendee()
+    {
+        return $this->numAtendee;
+    }
+
+    /**
+     * Get the remaining spaces for the event
+     *
+     * @return int
+     */
+    public function getRemainingSpaces()
+    {
+        return $this->getCapacity() - $this->getNumAtendee();
+    }
+
+    /**
      * Serialize this entity into an array
      *
      * @return array
      */
     public function toArray()
     {
-        $result = array();
+        $result = array(
+            'title'                         => $this->getTitle(),
+            'background_color'              => $this->getBackgroundColor(),
+            'box_background_color'          => $this->getBoxBackgroundColor(),
+            'box_header_background_color'   => $this->getBoxHeaderBackgroundColor(),
+            'box_border_color'              => $this->getBoxBorderColor(),
+            'box_header_text_color'         => $this->getBoxHeaderTextColor(),
+            'box_text_color'                => $this->getBoxTextColor(),
+            'capacity'                      => $this->getCapacity(),
+            'currency'                      => $this->getCurrency(),
+            'description'                   => $this->getDescription(),
+            'end_date'                      => $this->getEndDate()->format('Y-m-d H:i:s'),
+            'link_color'                    => $this->getLinkColor(),
+            'organizer_id'                  => $this->getOrganizer()->getId(),
+            'personalized_url'              => $this->getPersonalizedUrl(),
+            'privacy'                       => $this->getPrivacy(),
+            'start_date'                    => $this->getStartDate()->format('Y-m-d H:i:s'),
+            'status'                        => $this->getStatus(),
+            'text_color'                    => $this->getTextColor(),
+            'timezone'                      => $this->getTimezone(),
+            'title_text_color'              => $this->getTitleTextColor(),
+            'venue_id'                      => $this->getVenue()->getId()
+        );
 
         if (null !== $this->getId()) {
             $result['id'] = $this->getId();
         }
-
-        $result = array_merge(
-            $result,
-            array(
-                'title'                         => $this->getTitle(),
-                'background_color'              => $this->getBackgroundColor(),
-                'box_background_color'          => $this->getBoxBackgroundColor(),
-                'box_header_background_color'   => $this->getBoxHeaderBackgroundColor(),
-                'box_border_color'              => $this->getBoxBorderColor(),
-                'box_header_text_color'         => $this->getBoxHeaderTextColor(),
-                'box_text_color'                => $this->getBoxTextColor(),
-                'box_text_color'                => $this->getBoxTextColor(),
-                'capacity'                      => $this->getCapacity(),
-                'currency'                      => $this->getCurrency(),
-                'custom_footer'                 => $this->getCustomFooter(),
-                'custom_header'                 => $this->getCustomHeader(),
-                'description'                   => $this->getDescription(),
-                'end_date'                      => $this->getEndDate()->format('Y-m-d H:i:s'),
-                'link_color'                    => $this->getLinkColor(),
-                'organizer_id'                  => $this->getOrganizer()->getId(),
-                'personalized_url'              => $this->getPersonalizedUrl(),
-                'privacy'                       => $this->getPrivacy(),
-                'start_date'                    => $this->getStartDate()->format('Y-m-d H:i:s'),
-                'status'                        => $this->getStatus(),
-                'text_color'                    => $this->getTextColor(),
-                'timezone'                      => $this->getTimezone(),
-                'title_text_color'              => $this->getTitleTextColor(),
-                'venue_id'                      => $this->getVenue()->getId()
-            )
-        );
 
         return $result;
     }
