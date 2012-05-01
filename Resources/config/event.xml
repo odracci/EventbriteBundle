@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client>
+    <commands>
+        <!-- event_search -->
+        <command name="event_search" method="GET" uri="/event_search">
+            <doc>This method uses Eventbrite search index to find publicly listed events.</doc>
+            <param name="keywords" doc="The search keywords. To run an OR search, you need this format: 'keywords=google%20OR%20multimedia'" />
+            <param name="category" doc="Event categories (comma seperated): conference, conventions, entertainment, fundraisers, meetings, other, performances, reunions, sales, seminars, social, sports, tradeshows, travel, religion, fairs, food, music, recreation." />
+            <param name="address" doc="The venue address." />
+            <param name="city" doc="The venue city." />
+            <param name="region" doc="The venue state/province/county/territory depending on the country. 2-letter state code is required for US addresses." />
+            <param name="postal_code" doc="The postal/zip code of the venue." />
+            <param name="country" doc="2-letter country code, according to the ISO 3166 format." />
+            <param name="within" doc="If “within” is set and the “city” or “zipcode” resolve to a specific geolocation, the search will be restricted to the specified within radius. The sorting default will be set to “distance”." />
+            <param name="within_unit" doc="If within is set, you can specify the unit to use: “M” for miles, or “K” for kilometers. By default, the API will use miles." />
+            <param name="latitude" doc="If “within” is set you can limit your search to wgs84 coordinates (latitude, Longitude)." />
+            <param name="longitude" doc="If “within” is set you can limit your search to wgs84 coordinates (latitude, Longitude)." />
+            <param name="date" doc="The event start date. Limit the list of results to a date range, specified by a label or by exact dates. Currently supported labels include: “All”, “Future”, “Past”, “Today”, “Yesterday”, “Last Week”, “This Week”, “Next week”, “This Month”, “Next Month” and months by name, e.g. “October”. Exact date ranges take the form “YYYY-MM-DD YYYY-MM-DD”, e.g. “2008-04-25 2008-04-27″." />
+            <param name="date_created" doc="The date range the event was created, specified by a label or by exact dates. Currently supported labels include: “Today”, “Yesterday”, “Last Week”, “This Week”, “This Month”. Exact date ranges take the form “YYYY-MM-DD YYYY-MM-DD”, e.g. “2008-04-25 2008-04-27″." />
+            <param name="date_modified" doc="The date the event was last modified, specified by a label or by exact dates. Currently supported labels include: “Today”, “Yesterday”, “Last Week”, “This Week”, “This Month”. Exact date ranges take the form “YYYY-MM-DD YYYY-MM-DD”, e.g. “2008-04-25 2008-04-27″." />
+            <param name="organizer" doc="The organizer name." />
+            <param name="max" doc="Limit the number of events returned. Maximum limit is 100 events per page. Default is 10." />
+            <param name="count_only" type="boolean" doc="Only return the total number of events (“true” or “false”). Default is “false”." />
+            <param name="sort_by" doc="Sort the list of events by “id”, “date”, “name”, “city”. The default is “date”." />
+            <param name="page" doc="Allows for paging through the results of a query. Default is 1." />
+            <param name="since_id" doc="Returns events with id greater than “since_id” value. Default is 1." />
+            <param name="tracking_link" doc="The tracking link code to add to the event URLs." />
+        </command>
+
+        <!-- event_get -->
+        <command name="event_get" method="GET" uri="/event_get">
+            <doc>This method returns the identified event resource along with any associated ticket, venue, or organizer profile objects. Only public events details are returned if no additional authentication tokens are supplied.</doc>
+            <param name="id" doc="The ID of the requested event." required="true" />
+            <paren name="user_key" required="false" />
+        </command>
+    </commands>
+</client>

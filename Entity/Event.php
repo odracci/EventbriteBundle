@@ -3,11 +3,9 @@
 namespace SFBCN\EventbriteBundle\Entity;
 
 /**
- * A Eventbrite event
+ * A Eventbrite event entity
  *
- * @category Eventbrite
- * @package SFBCN\EventbriteBundle
- * @subpackage Eventbrite
+ * @author Christian Soronellas <theunic@gmail.com>
  */
 class Event
 {
@@ -62,7 +60,7 @@ class Event
     private $venue;
 
     /**
-     * @var \SFBCN\EventbriteBundle\Eventbrite\Organizer
+     * @var \SFBCN\EventbriteBundle\Entity\Organizer
      */
     private $organizer;
 
@@ -366,15 +364,15 @@ class Event
     }
 
     /**
-     * @param \SFBCN\EventbriteBundle\Eventbrite\Organizer $organizer
+     * @param \SFBCN\EventbriteBundle\Entity\Organizer $organizer
      */
-    public function setOrganizer(\SFBCN\EventbriteBundle\Eventbrite\Organizer $organizer)
+    public function setOrganizer(\SFBCN\EventbriteBundle\Entity\Organizer $organizer)
     {
         $this->organizer = $organizer;
     }
 
     /**
-     * @return \SFBCN\EventbriteBundle\Eventbrite\Organizer
+     * @return \SFBCN\EventbriteBundle\Entity\Organizer
      */
     public function getOrganizer()
     {
@@ -477,15 +475,6 @@ class Event
         return $this->tickets;
     }
 
-    public function addTicket(\SFBCN\EventbriteBundle\Eventbrite\Ticket $ticket)
-    {
-        if (null === $this->tickets) {
-            $this->tickets = array();
-        }
-
-        $this->tickets[] = $ticket;
-    }
-
     /**
      * @param string $timezone
      */
@@ -535,18 +524,64 @@ class Event
     }
 
     /**
-     * @param \SFBCN\EventbriteBundle\Eventbrite\Venue $venue
+     * @param \SFBCN\EventbriteBundle\Entity\Venue $venue
      */
-    public function setVenue(\SFBCN\EventbriteBundle\Eventbrite\Venue $venue)
+    public function setVenue(\SFBCN\EventbriteBundle\Entity\Venue $venue)
     {
         $this->venue = $venue;
     }
 
     /**
-     * @return \SFBCN\EventbriteBundle\Eventbrite\Venue
+     * @return \SFBCN\EventbriteBundle\Entity\Venue
      */
     public function getVenue()
     {
         return $this->venue;
+    }
+
+    /**
+     * Serialize this entity into an array
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $result = array();
+
+        if (null !== $this->getId()) {
+            $result['id'] = $this->getId();
+        }
+
+        $result = array_merge(
+            $result,
+            array(
+                'title'                         => $this->getTitle(),
+                'background_color'              => $this->getBackgroundColor(),
+                'box_background_color'          => $this->getBoxBackgroundColor(),
+                'box_header_background_color'   => $this->getBoxHeaderBackgroundColor(),
+                'box_border_color'              => $this->getBoxBorderColor(),
+                'box_header_text_color'         => $this->getBoxHeaderTextColor(),
+                'box_text_color'                => $this->getBoxTextColor(),
+                'box_text_color'                => $this->getBoxTextColor(),
+                'capacity'                      => $this->getCapacity(),
+                'currency'                      => $this->getCurrency(),
+                'custom_footer'                 => $this->getCustomFooter(),
+                'custom_header'                 => $this->getCustomHeader(),
+                'description'                   => $this->getDescription(),
+                'end_date'                      => $this->getEndDate()->format('Y-m-d H:i:s'),
+                'link_color'                    => $this->getLinkColor(),
+                'organizer_id'                  => $this->getOrganizer()->getId(),
+                'personalized_url'              => $this->getPersonalizedUrl(),
+                'privacy'                       => $this->getPrivacy(),
+                'start_date'                    => $this->getStartDate()->format('Y-m-d H:i:s'),
+                'status'                        => $this->getStatus(),
+                'text_color'                    => $this->getTextColor(),
+                'timezone'                      => $this->getTimezone(),
+                'title_text_color'              => $this->getTitleTextColor(),
+                'venue_id'                      => $this->getVenue()->getId()
+            )
+        );
+
+        return $result;
     }
 }

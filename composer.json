@@ -1,0 +1,16 @@
+{
+    "name": "SFBCN/EventbriteBundle",
+    "description": "A bundle to interact with the Eventbrite API",
+    "require": {
+        "guzzle/guzzle": "v2.4.1"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.7.2"
+    },
+    "authors": [
+        {
+            "name": "Christian Soronellas",
+            "email": "theunic@gmail.com"
+        }
+    ]
+}

@@ -1,4 +1,13 @@
+parameters:
+  eventbrite.client_class: "\Guzzle\Service\Client"
+  eventbrite.client_factory_class: "\SFBCN\EventbriteBundle\Eventbrite\ClientFactory"
+  eventbrite.base_url: "https://www.eventbrite.com/xml"
+
 services:
-  eventbrite:
-    class: SFBCN\EventbriteBundle\Eventbrite\Service
-    arguments: [%app_key%, %user_key%]
+  eventbrite.client:
+    class: %eventbrite.client_class%
+    factory_class: %eventbrite.client_factory_class%
+    factory_method: "factory"
+    public: false
+    arguments:
+      [{ appKey: %app_key%, userKey: %user_key%, servicesDescriptionFile: %servicesDescriptionFile%, base_url: %eventbrite.base_url%}]

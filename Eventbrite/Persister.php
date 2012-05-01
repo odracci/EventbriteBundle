@@ -9,64 +9,23 @@
 
 namespace SFBCN\EventbriteBundle\Eventbrite;
 
+use Guzzle\Service\Client;
+use Guzzle\Http\Message\Request;
+
 /**
  * Eventbrite service
  *
- * @category Eventbrite
- * @package SFBCN\EventbriteBundle
- * @subpackage Eventbrite
+ * @author Christian Soronellas <theunic@gmail.com>
  */
-class Service
+class Persister
 {
     /**
-     * @var \Eventbrite\Client
+     * @var \Guzzle\Service\Client
      */
     private $client;
 
     /**
-     * The Eventbrite app key
-     *
-     * @var string
-     */
-    private $appKey;
-
-    /**
-     * The Eventbrite user key
-     *
-     * @var string
-     */
-    private $userKey;
-
-    /**
-     * Class constructor
-     *
-     * @param string $appKey
-     * @param string $userKey
-     */
-    public function __construct($appKey, $userKey)
-    {
-        $this->setAppKey($appKey);
-        $this->setUserKey($userKey);
-    }
-
-    /**
-     * @param string $appKey
-     */
-    public function setAppKey($appKey)
-    {
-        $this->appKey = $appKey;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAppKey()
-    {
-        return $this->appKey;
-    }
-
-    /**
-     * @param \Eventbrite\Client $client
+     * @param \Guzzle\Service\Client $client
      */
     public function setClient($client)
     {
@@ -74,98 +33,95 @@ class Service
     }
 
     /**
-     * @return \Eventbrite\Client
+     * @return \Guzzle\Service\Client
      */
     public function getClient()
     {
-        if (null === $this->client) {
-            $this->client = new EventbriteClient(
-                array(
-                    'app_key'  => $this->getAppKey(),
-                    'user_key' => $this->getUserKey()
-                )
-            );
-        }
-
         return $this->client;
     }
 
     /**
-     * @param string $userKey
+     * Class constructor
+     *
+     * @param \Guzzle\Service\Client $client
      */
-    public function setUserKey($userKey)
+    public function __construct($client)
     {
-        $this->userKey = $userKey;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUserKey()
-    {
-        return $this->userKey;
+        $this->setClient($client);
     }
 
     /**
      * Saves an Eventbrite entity
      *
-     * @param mixed $entity
+     * @param mixed   $entity
+     * @param boolean $forceUpdate
+     *
+     * @throws \SFBCN\EventbriteBundle\Eventbrite\Client\Exception
+     *
+     * @return mixed
      */
-    public function save($entity)
+    public function save($entity, $forceUpdate = false)
     {
-        if ($entity instanceof \SFBCN\EventbriteBundle\Eventbrite\Venue) {
-            return $this->saveVenue($entity);
+        $method = $this->_extractMethod($entity, $forceUpdate);
+
+        $request = $this->getClient()->get('/' . $method);
+        $this->_setRequestQueryString($request, $entity);
+
+        $response = $request->send();
+        $xml = new \SimpleXMLElement($response->getBody(true));
+
+        // Error?
+        if (isset($xml->error)) {
+            throw new Client\Exception($xml->error->error_type . ': ' . $xml->error->error_message);
         }
 
-        if ($entity instanceof \SFBCN\EventbriteBundle\Eventbrite\Organizer) {
-            return $this->saveOrganizer($entity);
-        }
+        $entity->setId((int) $xml->id);
 
-        if ($entity instanceof \SFBCN\EventbriteBundle\Eventbrite\Ticket) {
-            return $this->saveTickets((array) $entity);
-        }
-
-        if ($entity instanceof \SFBCN\EventbriteBundle\Eventbrite\Event) {
-            return $this->saveEvent($entity);
-        }
+        return $entity;
     }
 
     /**
-     * Set the default values for the entity
+     * Try to perform an update against Eventbrite
      *
-     * @param $entity
-     * @param array $defaultValues
+     * @param mixed $entity
+     *
+     * @return mixed
      */
-    private function setDefaultValues($entity, array $defaultValues)
+    public function update($entity)
     {
-        foreach ($defaultValues as $property => $value) {
-            if (method_exists($this, ($setter = 'set' . ucfirst($property)))) {
-                $entity->{$setter}($value);
-            }
+        return $this->save($entity, true);
+    }
+
+    /**
+     * Given an entity, extract the method to be called ("_new" or "_update")
+     *
+     * @param mixed   $entity
+     * @param boolean $forUpdate
+     *
+     * @return string
+     */
+    private function _extractMethod($entity, $forUpdate = false)
+    {
+        $class = get_class($entity);
+
+        if (false !== strpos($class, '\\')) {
+            $class = array_slice(explode('\\', $class), -1);
+            $class = $class[0];
         }
+
+        return strtolower($class) . '_' . ($forUpdate ? 'update' : 'new');
     }
 
-    private function saveVenue(\SFBCN\EventbriteBundle\Eventbrite\Venue $venue)
+    /**
+     * Given an entity and a Request object, set the query string params
+     *
+     * @param Guzzle\Http\Message\Request $request
+     * @param mixed                       $entity
+     */
+    private function _setRequestQueryString(\Guzzle\Http\Message\Request $request, $entity)
     {
-        if (null !== $venue->getId()) {
-            $this->getClient()->venue_update($venue->toArray());
-        } else {
-            $this->getClient()->venue_new($venue->toArray());
+        foreach ($entity->toArray() as $key => $value) {
+            $request->getQuery()->add($key, $value);
         }
-    }
-
-    private function saveOrganizer(\SFBCN\EventbriteBundle\Eventbrite\Organizer $organizer)
-    {
-
-    }
-
-    private function saveTickets(array $tickets)
-    {
-
-    }
-
-    private function saveEvent(\SFBCN\EventbriteBundle\Eventbrite\Event $event)
-    {
-
     }
 }

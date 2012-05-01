@@ -30,6 +30,10 @@ class SFBCNEventbriteExtension extends Extension
             $container->setParameter('user_key', $config['user_key']);
         }
 
+        if (isset($config['servicesDescriptionFile']) && file_exists($config['servicesDescriptionFile'])) {
+            $container->setParameter('servicesDescriptionFile', $config['servicesDescriptionFile']);
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

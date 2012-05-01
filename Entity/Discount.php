@@ -1,20 +1,16 @@
 <?php
 
-namespace SFBCN\EventbriteBundle\Eventbrite;
+namespace SFBCN\EventbriteBundle\Entity;
 
 /**
- * An Eventbrite discount
- *
- * @category Eventbrite
- * @package SFBCN\EventbriteBundle
- * @subpackage Eventbrite
+ * An Eventbrite discount entity
  */
 class Discount
 {
     /**
      * The related event
      *
-     * @var \SFBCN\EventbriteBundle\Eventbrite\Event
+     * @var \SFBCN\EventbriteBundle\Entity\Event
      */
     private $event;
 
@@ -120,7 +116,7 @@ class Discount
     }
 
     /**
-     * @param \SFBCN\EventbriteBundle\Eventbrite\Event $event
+     * @param \SFBCN\EventbriteBundle\Entity\Event $event
      */
     public function setEvent(\SFBCN\EventbriteBundle\Eventbrite\Event $event)
     {
@@ -128,7 +124,7 @@ class Discount
     }
 
     /**
-     * @return \SFBCN\EventbriteBundle\Eventbrite\Event
+     * @return \SFBCN\EventbriteBundle\Entity\Event
      */
     public function getEvent()
     {
@@ -200,7 +196,7 @@ class Discount
     }
 
     /**
-     * @param \SFBCN\EventbriteBundle\Eventbrite\Ticket $ticket
+     * @param \SFBCN\EventbriteBundle\Entity\Ticket $ticket
      */
     public function addTicket(\SFBCN\EventbriteBundle\Eventbrite\Ticket $ticket)
     {

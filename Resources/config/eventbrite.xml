@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client>
+    <includes>
+        <include path="event.xml" />
+    </includes>
+</client>

@@ -1,13 +1,11 @@
 <?php
 
-namespace SFBCN\EventbriteBundle\Eventbrite;
+namespace SFBCN\EventbriteBundle\Entity;
 
 /**
  * A venue class for Eventbrite events
  *
- * @category Eventbrite
- * @package SFBCN\EventbrideBundle
- * @subpackage Eventbride
+ * @author Christian Soronellas <theunic@gmail.com>
  */
 class Venue
 {
@@ -21,7 +19,7 @@ class Venue
     /**
      * The Eventbrite related organizer
      *
-     * @var \SFBCN\EventbriteBundle\Eventbrite\Organizer
+     * @var \SFBCN\EventbriteBundle\Entity\Organizer
      */
     private $organizer;
 
@@ -156,7 +154,7 @@ class Venue
     }
 
     /**
-     * @param \SFBCN\EventbriteBundle\Eventbrite\Organizer $organizer
+     * @param \SFBCN\EventbriteBundle\Entity\Organizer $organizer
      */
     public function setOrganizer(\SFBCN\EventbriteBundle\Eventbrite\Organizer $organizer)
     {
@@ -164,7 +162,7 @@ class Venue
     }
 
     /**
-     * @return \SFBCN\EventbriteBundle\Eventbrite\Organizer
+     * @return \SFBCN\EventbriteBundle\Entity\Organizer
      */
     public function getOrganizer()
     {
@@ -219,6 +217,11 @@ class Venue
         return $this->id;
     }
 
+    /**
+     * Serializes a Venue into an array
+     *
+     * @return array
+     */
     public function toArray()
     {
         $entity = array(

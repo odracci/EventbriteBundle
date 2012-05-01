@@ -1,18 +1,16 @@
 <?php
 
-namespace SFBCN\EventbriteBundle\Eventbrite;
+namespace SFBCN\EventbriteBundle\Entity;
 
 /**
  * A Eventbrite event
  *
- * @category Eventbrite
- * @package SFBCN\EventbriteBundle
- * @subpackage Eventbrite
+ * @author Christian Soronellas <theunic@gmail.com>
  */
 class Ticket
 {
     /**
-     * @var \SFBCN\EventbriteBundle\Eventbrite\Event
+     * @var \SFBCN\EventbriteBundle\Entity\Event
      */
     private $event;
 
@@ -123,7 +121,7 @@ class Ticket
     }
 
     /**
-     * @param \SFBCN\EventbriteBundle\Eventbrite\Event $event
+     * @param \SFBCN\EventbriteBundle\Entity\Event $event
      */
     public function setEvent(\SFBCN\EventbriteBundle\Eventbrite\Event $event)
     {
@@ -131,7 +129,7 @@ class Ticket
     }
 
     /**
-     * @return \SFBCN\EventbriteBundle\Eventbrite\Event
+     * @return \SFBCN\EventbriteBundle\Entity\Event
      */
     public function getEvent()
     {

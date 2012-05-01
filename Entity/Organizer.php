@@ -1,13 +1,11 @@
 <?php
 
-namespace SFBCN\EventbriteBundle\Eventbrite;
+namespace SFBCN\EventbriteBundle\Entity;
 
 /**
  * An Eventbrite organizer
  *
- * @category Eventbrite
- * @package SFBCN\EventbriteBundle
- * @subpackage Eventbrite
+ * @author Christian Soronellas <theunic@gmail.com>
  */
 class Organizer
 {
