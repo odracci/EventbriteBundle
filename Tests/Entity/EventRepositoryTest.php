@@ -76,7 +76,7 @@ EOX
         $result = $this->object->map(simplexml_load_string(<<<EOX
 <?xml version="1.0" encoding="UTF-8" ?>
 <event>
-    <id>3033452137</id>
+    <id>1</id>
     <background_color>FFFFFF</background_color>
     <box_background_color>FFFFFF</box_background_color>
     <box_border_color>D5D5D3</box_border_color>
@@ -140,7 +140,7 @@ EOX
 EOX
         ));
 
-        $this->assertEquals(3033452137, $result->getId());
+        $this->assertEquals(1, $result->getId());
         $this->assertEquals('FFFFFF', $result->getBackgroundColor());
         $this->assertEquals('FFFFFF', $result->getBoxBackgroundColor());
         $this->assertEquals('D5D5D3', $result->getBoxBorderColor());
