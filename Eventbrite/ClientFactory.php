@@ -30,7 +30,7 @@ class ClientFactory
 
         $client = new Client($config->get('base_url'));
 
-        $authenticationSubscriber = new AuthenticationSubscriber($config->get('appKey'), $config->get('userKey'));
+        $authenticationSubscriber = new AuthenticationSubscriber($config->get('app_key'), $config->get('user_key'));
         $client->getEventDispatcher()->addSubscriber($authenticationSubscriber);
 
         // Uncomment the following two lines to use an XML service description
