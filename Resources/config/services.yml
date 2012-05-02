@@ -1,8 +1,8 @@
 parameters:
-  eventbrite.client_class: "\Guzzle\Service\Client"
-  eventbrite.client_factory_class: "\SFBCN\EventbriteBundle\Eventbrite\ClientFactory"
+  eventbrite.client_class: Guzzle\Service\Client
+  eventbrite.client_factory_class: SFBCN\EventbriteBundle\Eventbrite\ClientFactory
   eventbrite.base_url: "https://www.eventbrite.com/xml"
-  eventbrite.events_class: "\SFBCN\EventbriteBundle\Entity\EventRepository"
+  eventbrite.events_class: SFBCN\EventbriteBundle\Entity\EventRepository
 
 services:
   eventbrite.client:
