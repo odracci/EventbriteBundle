@@ -25,7 +25,7 @@ class ClientFactory
     public static function factory($config)
     {
         $default = array();
-        $required = array('app_key', 'user_key', 'servicesDescriptionFile', 'base_url');
+        $required = array('app_key', 'user_key', 'services_description_file', 'base_url');
         $config = Inspector::prepareConfig($config, $default, $required);
 
         $client = new Client($config->get('base_url'));
