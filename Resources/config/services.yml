@@ -11,7 +11,7 @@ services:
     factory_method: "factory"
     public: false
     arguments:
-      [{ appKey: %app_key%, userKey: %user_key%, services_description_file: %services_description_file%, base_url: %eventbrite.base_url%}]
+      [{ app_key: %app_key%, user_key: %user_key%, services_description_file: %services_description_file%, base_url: %eventbrite.base_url%}]
 
   eventbrite.events:
     class: %eventbrite.events_class%
