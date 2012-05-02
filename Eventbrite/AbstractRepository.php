@@ -40,4 +40,26 @@ abstract class AbstractRepository implements RepositoryInterface
     {
         $this->setClient($client);
     }
+
+    /**
+     * Executes a command with a given arguments and maps the
+     * response to the concerned entity
+     *
+     * @param string $commandName
+     * @param array $commandArgs
+     *
+     * @return mixed
+     */
+    protected function _executeCommand($commandName, array $commandArgs)
+    {
+        $command = $this->getClient()->getCommand($commandName, $commandArgs);
+        $response = $this->getClient()->execute($command);
+
+        // Error?
+        if (isset($response->error)) {
+            throw new Client\Exception($response->error->error_type . ': ' . $response->error->error_message);
+        }
+
+        return $this->map($response);
+    }
 }

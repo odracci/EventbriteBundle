@@ -62,20 +62,16 @@ class Persister
      */
     public function save($entity, $forceUpdate = false)
     {
-        $method = $this->_extractMethod($entity, $forceUpdate);
-
-        $request = $this->getClient()->get('/' . $method);
-        $this->_setRequestQueryString($request, $entity);
-
-        $response = $request->send();
-        $xml = new \SimpleXMLElement($response->getBody(true));
+        $commandName = $this->_extractCommandName($entity, $forceUpdate);
+        $command = $this->getClient()->getCommand($commandName, $entity->toArray());
+        $response = $this->getClient()->execute($command);
 
         // Error?
-        if (isset($xml->error)) {
-            throw new Client\Exception($xml->error->error_type . ': ' . $xml->error->error_message);
+        if (isset($response->error)) {
+            throw new Client\Exception($response->error->error_type . ': ' . $response->error->error_message);
         }
 
-        $entity->setId((int) $xml->id);
+        $entity->setId((string) $response->id);
 
         return $entity;
     }
@@ -93,14 +89,14 @@ class Persister
     }
 
     /**
-     * Given an entity, extract the method to be called ("_new" or "_update")
+     * Given an entity, extract the command name to be called ("_new" or "_update")
      *
      * @param mixed   $entity
      * @param boolean $forUpdate
      *
      * @return string
      */
-    private function _extractMethod($entity, $forUpdate = false)
+    private function _extractCommandName($entity, $forUpdate = false)
     {
         $class = get_class($entity);
 

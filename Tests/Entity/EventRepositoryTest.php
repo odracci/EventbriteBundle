@@ -32,8 +32,7 @@ class EventRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
 
-        $response = m::mock('\Guzzle\Http\Message\Response');
-        $response->shouldReceive('getBody')->with(true)->andReturn(<<<EOX
+        $response = simplexml_load_string(<<<EOX
 <?xml version="1.0" encoding="utf-8"?>
 <event>
     <id>1</id>

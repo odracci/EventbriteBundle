@@ -29,64 +29,39 @@ class PersisterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for SFBCN\EventbriteBundle\Eventbrite\Service::save
+     * testSave data provider
      *
-     * @covers SFBCN\EventbriteBundle\Eventbrite\Service::save
+     * @return array
      */
-    public function testSave()
+    public function saveDataProvider()
     {
-        $query = m::mock('\Guzzle\Common\Collection');
-        $query->shouldReceive('add')->with('key1', 'value1')->once();
-        $query->shouldReceive('add')->with('key2', 'value2')->once();
-
-        $response = m::mock('\Guzzle\Http\Message\Response');
-        $response->shouldReceive('getBody')->with(true)->once()->andReturn('<?xml version="1.0" encoding="utf-8"?><process><id>1</id></process>');
-
-        $request = m::mock('\Guzzle\Http\Message\Request');
-        $request->shouldReceive('getQuery')->times(2)->andReturn($query);
-        $request->shouldReceive('send')->once()->andReturn($response);
-
-        $entity = m::mock('\SFBCN\EventbriteBundle\Entity\Event');
-        $entity->shouldReceive('toArray')->andReturn(array('key1' => 'value1', 'key2' => 'value2'));
-        $entity->shouldReceive('setId')->with(1)->once();
-        $entity->shouldReceive('setIsNew')->with(false)->once();
-
-        $client = m::mock(new Client());
-        $classParts = array_slice(explode('\\', get_class($entity)), -1);
-        $client->shouldReceive('get')->with('/' . strtolower($classParts[0]) . '_new')->andReturn($request);
-
-        $this->object = new Persister($client);
-        $this->assertInstanceOf('\SFBCN\EventbriteBundle\Entity\Event', $this->object->save($entity));
+        return array(
+            array('_new', false),
+            array('_update', true)
+        );
     }
 
     /**
      * Test case for SFBCN\EventbriteBundle\Eventbrite\Service::save
      *
-     * @covers SFBCN\EventbriteBundle\Eventbrite\Service::update
+     * @covers SFBCN\EventbriteBundle\Eventbrite\Service::save
+     * @dataProvider saveDataProvider
      */
-    public function testUpdate()
+    public function testSave($suffix, $forceUpdate)
     {
-        $query = m::mock('\Guzzle\Common\Collection');
-        $query->shouldReceive('add')->with('key1', 'value1')->once();
-        $query->shouldReceive('add')->with('key2', 'value2')->once();
-
-        $response = m::mock('\Guzzle\Http\Message\Response');
-        $response->shouldReceive('getBody')->with(true)->once()->andReturn('<?xml version="1.0" encoding="utf-8"?><process><id>1</id></process>');
-
-        $request = m::mock('\Guzzle\Http\Message\Request');
-        $request->shouldReceive('getQuery')->times(2)->andReturn($query);
-        $request->shouldReceive('send')->once()->andReturn($response);
+        $response = simplexml_load_string('<?xml version="1.0" encoding="utf-8"?><process><id>1</id></process>');
+        $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
 
         $entity = m::mock('\SFBCN\EventbriteBundle\Entity\Event');
         $entity->shouldReceive('toArray')->andReturn(array('key1' => 'value1', 'key2' => 'value2'));
         $entity->shouldReceive('setId')->with(1)->once();
-        $entity->shouldReceive('setIsNew')->with(false)->once();
 
         $client = m::mock(new Client());
         $classParts = array_slice(explode('\\', get_class($entity)), -1);
-        $client->shouldReceive('get')->with('/' . strtolower($classParts[0]) . '_update')->andReturn($request);
+        $client->shouldReceive('getCommand')->with(strtolower($classParts[0]) . $suffix, array('key1' => 'value1', 'key2' => 'value2'))->andReturn($command);
+        $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
 
         $this->object = new Persister($client);
-        $this->assertInstanceOf('\SFBCN\EventbriteBundle\Entity\Event', $this->object->save($entity, true));
+        $this->assertInstanceOf('\SFBCN\EventbriteBundle\Entity\Event', $this->object->save($entity, $forceUpdate));
     }
 }
