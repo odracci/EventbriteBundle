@@ -31,7 +31,7 @@ class SFBCNEventbriteExtension extends Extension
         }
 
         if (isset($config['services_description_file']) && file_exists($config['services_description_file'])) {
-            $container->setParameter('servicesDescriptionFile', $config['servicesDescriptionFile']);
+            $container->setParameter('services_description_file', $config['services_description_file']);
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
