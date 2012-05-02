@@ -30,7 +30,7 @@ class SFBCNEventbriteExtension extends Extension
             $container->setParameter('user_key', $config['user_key']);
         }
 
-        if (isset($config['servicesDescriptionFile']) && file_exists($config['servicesDescriptionFile'])) {
+        if (isset($config['services_description_file']) && file_exists($config['services_description_file'])) {
             $container->setParameter('servicesDescriptionFile', $config['servicesDescriptionFile']);
         }
 

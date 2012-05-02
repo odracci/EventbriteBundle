@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('app_key')->cannotBeEmpty()->end()
                 ->scalarNode('user_key')->cannotBeEmpty()->end()
-                ->scalarNode('servicesDescriptionFile')->cannotBeEmpty()->end()
+                ->scalarNode('services_description_file')->cannotBeEmpty()->end()
             ->end();
 
         return $treeBuilder;

@@ -100,4 +100,20 @@ class Organizer
     {
         return $this->url;
     }
+
+    /**
+     * Serializes to an array the organizer entity
+     */
+    public function toArray()
+    {
+        $result = array(
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'url' => $this->getUrl()
+        );
+
+        if (null !== $this->getId()) {
+            $result['id'] = $this->getId();
+        }
+    }
 }
