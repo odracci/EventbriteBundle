@@ -34,7 +34,7 @@ class ClientFactory
         $client->getEventDispatcher()->addSubscriber($authenticationSubscriber);
 
         // Uncomment the following two lines to use an XML service description
-        $client->setDescription(ServiceDescription::factory($config->get('servicesDescriptionFile')));
+        $client->setDescription(ServiceDescription::factory($config->get('services_description_file')));
 
         return $client;
     }
