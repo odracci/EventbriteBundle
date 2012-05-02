@@ -44,7 +44,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
         $config = array(
             'app_key'                   => 'test',
             'user_key'                  => 'test',
-            'servicesDescriptionFile'   => dirname(__DIR__) . '/../Resources/config/eventbrite.xml',
+            'services_description_file' => dirname(__DIR__) . '/../Resources/config/eventbrite.xml',
             'base_url'                  => 'https://www.eventbrite.com/xml'
         );
 
