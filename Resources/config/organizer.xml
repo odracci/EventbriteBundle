@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client>
+    <commands>
+        <!-- organizer_list_events -->
+        <command method="GET" uri="organizer_list_events">
+            <doc>This method lists the events created by this organizer. Only public events are returned if no authentication tokens are provided.</doc>
+            <param name="id" doc="A numeric organizer id." location="query" />
+        </command>
+
+        <!-- organizer_get -->
+        <command method="GET" uri="organizer_get">
+            <doc>This method retrieves a public Organizer Profile by id.</doc>
+            <param name="id" doc="The ID of the requested organizer profile." location="query" />
+        </command>
+
+        <!-- organizer_new -->
+        <command method="GET" uri="organizer_new">
+            <doc>This method creates a new organizer, returning the ID of the newly created organizer.</doc>
+            <param name="name" doc="The organizer name. This value must be unique." location="query" />
+            <param name="description" doc="The organizer description." location="query" />
+        </command>
+
+        <!-- organizer_new -->
+        <command method="GET" uri="organizer_update">
+            <doc>This method updates an existing organizer. Only the fields passed as arguments will be modified. It returns the ID of the updated organizer.</doc>
+            <paran name="id" doc="A numeric organizer ID." location="query" />
+            <param name="name" doc="The organizer name. This value must be unique." location="query" />
+            <param name="description" doc="The organizer description." location="query" />
+        </command>
+    </commands>
+</client>

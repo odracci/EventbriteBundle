@@ -2,7 +2,7 @@
 <client>
     <commands>
         <!-- event_search -->
-        <command name="event_search" method="GET" uri="/event_search">
+        <command name="event_search" method="GET" uri="event_search">
             <doc>This method uses Eventbrite search index to find publicly listed events.</doc>
             <param location="query" name="keywords" doc="The search keywords. To run an OR search, you need this format: 'keywords=google%20OR%20multimedia'" />
             <param location="query" name="category" doc="Event categories (comma seperated): conference, conventions, entertainment, fundraisers, meetings, other, performances, reunions, sales, seminars, social, sports, tradeshows, travel, religion, fairs, food, music, recreation." />

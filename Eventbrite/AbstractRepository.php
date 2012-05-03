@@ -3,6 +3,8 @@
 namespace SFBCN\EventbriteBundle\Eventbrite;
 
 use Guzzle\Service\Client;
+use SFBCN\EventbriteBundle\Eventbrite\Mapper;
+use SFBCN\EventbriteBundle\Eventbrite\Client\Exception as EventbriteClientException;
 
 /**
  * The base repository class to inject the Guzzle client
@@ -15,6 +17,11 @@ abstract class AbstractRepository implements RepositoryInterface
      * @var \Guzzle\Service\Client
      */
     private $client;
+
+    /**
+     * @var \SFBCN\EventbriteBundle\Eventbrite\Mapper
+     */
+    private $mapper;
 
     /**
      * @param \Guzzle\Service\Client $client
@@ -33,12 +40,31 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * Class contructor
-     * @param \Guzzle\Service\Client $client
+     * @param \SFBCN\EventbriteBundle\Eventbrite\Mapper $mapper
      */
-    public function __construct($client)
+    public function setMapper(\SFBCN\EventbriteBundle\Eventbrite\Mapper $mapper)
+    {
+        $this->mapper = $mapper;
+    }
+
+    /**
+     * @return \SFBCN\EventbriteBundle\Eventbrite\Mapper
+     */
+    public function getMapper()
+    {
+        return $this->mapper;
+    }
+
+    /**
+     * Class contructor
+     *
+     * @param \Guzzle\Service\Client $client
+     * @param \SFBCN\EventbriteBundle\Eventbrite\Mapper
+     */
+    public function __construct($client, Mapper $mapper)
     {
         $this->setClient($client);
+        $this->setMapper($mapper);
     }
 
     /**
@@ -48,18 +74,19 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param string $commandName
      * @param array $commandArgs
      *
+     * @throw \SFBCN\EventbriteBundle\Eventbrite\Client\Exception
      * @return mixed
      */
-    protected function _executeCommand($commandName, array $commandArgs)
+    public function executeCommand($commandName, array $commandArgs)
     {
         $command = $this->getClient()->getCommand($commandName, $commandArgs);
         $response = $this->getClient()->execute($command);
 
         // Error?
         if (isset($response->error)) {
-            throw new Client\Exception($response->error->error_type . ': ' . $response->error->error_message);
+            throw new EventbriteClientException($response->error->error_type . ': ' . $response->error->error_message);
         }
 
-        return $this->map($response);
+        return $this->getMapper()->map($response);
     }
 }

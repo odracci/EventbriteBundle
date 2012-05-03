@@ -2,5 +2,6 @@
 <client>
     <includes>
         <include path="event.xml" />
+        <include path="organizer.xml" />
     </includes>
 </client>

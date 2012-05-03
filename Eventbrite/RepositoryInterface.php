@@ -10,11 +10,13 @@ namespace SFBCN\EventbriteBundle\Eventbrite;
 interface RepositoryInterface
 {
     /**
-     * Maps an entity from an XML representation to an object representation
+     * Executes a command with a given arguments and maps the
+     * response to the concerned entity
      *
-     * @param string $entity
+     * @param string $commandName
+     * @param array $commandArgs
      *
-     * @return object
+     * @return mixed
      */
-    public function map($entity);
+    public function executeCommand($commandName, array $commandArgs);
 }

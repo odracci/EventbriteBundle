@@ -107,17 +107,4 @@ class Persister
 
         return strtolower($class) . '_' . ($forUpdate ? 'update' : 'new');
     }
-
-    /**
-     * Given an entity and a Request object, set the query string params
-     *
-     * @param Guzzle\Http\Message\Request $request
-     * @param mixed                       $entity
-     */
-    private function _setRequestQueryString(\Guzzle\Http\Message\Request $request, $entity)
-    {
-        foreach ($entity->toArray() as $key => $value) {
-            $request->getQuery()->add($key, $value);
-        }
-    }
 }
