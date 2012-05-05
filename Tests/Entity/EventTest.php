@@ -98,7 +98,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
             'link_color'                    => 'FFFFFF',
             'organizer_id'                  => 1,
             'personalized_url'              => 'test',
-            'privacy'                       => 'Public',
+            'privacy'                       => 1,
             'start_date'                    => $now->format('Y-m-d H:i:s'),
             'status'                        => 'Live',
             'text_color'                    => 'FFFFFF',

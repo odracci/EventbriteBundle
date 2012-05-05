@@ -13,13 +13,13 @@ class Event
     const STATUS_LIVE      = 'Live';
     const STATUS_COMPLETED = 'Completed';
 
-    const PRIVACY_PUBLIC  = 'Public';
-    const PRIVACY_PRIVATE = 'Private';
+    const PRIVACY_PUBLIC  = 1;
+    const PRIVACY_PRIVATE = 0;
 
     /**
      * The event ID
      *
-     * @var int
+     * @var string
      */
     private $id;
 

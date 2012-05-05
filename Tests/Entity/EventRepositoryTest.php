@@ -111,4 +111,76 @@ EOX
 
         $this->assertEquals('#event#', $result);
     }
+
+    /**
+     * @covers \SFBCN\EventbriteBundle\Entity\EventRepository::searchEvent
+     */
+    public function testSearchEvent()
+    {
+        $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
+
+        $response = simplexml_load_string(<<<EOX
+<?xml version="1.0" encoding="UTF-8" ?>
+<events>
+    <event>
+        <id>1</id>
+    </event>
+    <event>
+        <id>2</id>
+    </event>
+</events>
+EOX
+        );
+
+        $mapper = m::mock('\SFBCN\EventbriteBundle\Eventbrite\Mapper');
+        $mapper->shouldReceive('map')->twice()->andReturn('#event1#', '#event2#');
+
+        $client = m::mock('stdClass');
+        $client->shouldReceive('getCommand')->with('event_search', array('test' => 'test'))->once()->andReturn($command);
+        $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
+
+        $this->object = new EventRepository($client, $mapper);
+        $result = $this->object->searchEvent(array('test' => 'test'));
+
+        $this->assertInternalType('array', $result);
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $this->assertEquals('#event' . ($i + 1) . '#', $result[$i]);
+        }
+    }
+
+    /**
+     * @covers \SFBCN\EventbriteBundle\Entity\EventRepository::copyEvent
+     */
+    public function testCopyEvent()
+    {
+        $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
+
+        $searchResponse = simplexml_load_string(<<<EOX
+<?xml version="1.0" encoding="utf-8"?>
+<process>
+    <id>2</id>
+</process>
+EOX
+        );
+
+        $findResponse = simplexml_load_string(<<<EOX
+<?xml version="1.0" encoding="utf-8"?>
+<event>
+    <id>2</id>
+</event>
+EOX
+        );
+
+        $client = m::mock('stdClass');
+        $client->shouldReceive('getCommand')->with('event_copy', array('id' => 1, 'event_name' => 'test'))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('event_get', array('id' => 2))->once()->andReturn($command);
+        $client->shouldReceive('execute')->twice()->andReturn($searchResponse, $findResponse);
+
+        $mapper = m::mock('\SFBCN\EventbriteBundle\Eventbrite\Mapper');
+        $mapper->shouldReceive('map')->with($findResponse)->once()->andReturn('#event#');
+
+        $this->object = new EventRepository($client, $mapper);
+
+        $this->assertEquals('#event#', $this->object->copyEvent(1, 'test'));
+    }
 }

@@ -23,7 +23,7 @@ class EventRepository extends AbstractRepository
      */
     public function findEvent($eventId)
     {
-        return $this->executeCommand('event_get', array('id' => $eventId));
+        return $this->getMapper()->map($this->executeCommand('event_get', array('id' => $eventId)));
     }
 
     /**
@@ -31,11 +31,18 @@ class EventRepository extends AbstractRepository
      *
      * @param array $eventParams
      *
-     * @return mixed
+     * @return array
      */
     public function searchEvent(array $eventParams)
     {
-        return $this->executeCommand('event_search', $eventParams);
+        $entities = $this->executeCommand('event_search', $eventParams);
+
+        $events = array();
+        foreach ($entities->event as $entity) {
+            $events[] = $this->getMapper()->map($entity);
+        }
+
+        return $events;
     }
 
     /**
@@ -51,14 +58,8 @@ class EventRepository extends AbstractRepository
      */
     public function copyEvent($eventId, $newEventName)
     {
-        $command = $this->getClient()->getCommand('event_copy', array('id' => $eventId, 'event_name' => $newEventName));
-        $response = $this->getClient()->execute($command);
+        $response = $this->executeCommand('event_copy', array('id' => $eventId, 'event_name' => $newEventName));
 
-        // Error?
-        if (isset($response->error)) {
-            throw new Client\Exception($response->error->error_type . ': ' . $response->error->error_message);
-        }
-
-        return $this->findEvent((string) $response->process->id);
+        return $this->findEvent((string) $response->id);
     }
 }

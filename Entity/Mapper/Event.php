@@ -2,17 +2,17 @@
 
 namespace SFBCN\EventbriteBundle\Entity\Mapper;
 
-use SFBCN\EventbriteBundle\Eventbrite\MapperInterface;
+use SFBCN\EventbriteBundle\Eventbrite\AbstractMapper;
 use SFBCN\EventbriteBundle\Entity\Event as EventEntity;
 
-class Event implements MapperInterface
+class Event extends AbstractMapper
 {
     /**
      * Maps an XML entity to an object entity
      *
      * @param \SimpleXMLElement $entity
      *
-     * @return SFBCN\EventbriteBundle\Entity\Event
+     * @return \SFBCN\EventbriteBundle\Entity\Event
      */
     public function map(\SimpleXMLElement $entity)
     {
@@ -42,7 +42,7 @@ class Event implements MapperInterface
         $event->setLogoSsl((string) $entity->logo_ssl);
         $event->setStatus((string) $entity->status);
         $event->setTextColor((string) $entity->text_color);
-        // $event->setOrganizer($this->getOrganizerRepository()->map($entity->organizer));
+        $event->setOrganizer($this->getMapper()->map($entity->organizer));
 
         return $event;
     }

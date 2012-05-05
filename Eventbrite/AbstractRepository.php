@@ -59,7 +59,7 @@ abstract class AbstractRepository implements RepositoryInterface
      * Class contructor
      *
      * @param \Guzzle\Service\Client $client
-     * @param \SFBCN\EventbriteBundle\Eventbrite\Mapper
+     * @param \SFBCN\EventbriteBundle\Eventbrite\Mapper $mapper
      */
     public function __construct($client, Mapper $mapper)
     {
@@ -75,7 +75,7 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param array $commandArgs
      *
      * @throw \SFBCN\EventbriteBundle\Eventbrite\Client\Exception
-     * @return mixed
+     * @return \SimpleXMLElement
      */
     public function executeCommand($commandName, array $commandArgs)
     {
@@ -87,6 +87,6 @@ abstract class AbstractRepository implements RepositoryInterface
             throw new EventbriteClientException($response->error->error_type . ': ' . $response->error->error_message);
         }
 
-        return $this->getMapper()->map($response);
+        return $response;
     }
 }
