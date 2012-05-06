@@ -3,27 +3,21 @@
 namespace SFBCN\EventbriteBundle\Entity;
 
 /**
- * A Eventbrite event
+ * An Eventbrite ticket
  *
  * @author Christian Soronellas <theunic@gmail.com>
  */
 class Ticket
 {
     /**
-     * @var \SFBCN\EventbriteBundle\Entity\Event
-     */
-    private $event;
-
-    /**
-     * 0 for fixed-price tickets, 1 for donations.
-     * 0 will be used by default if not provided.
+     * The ticket ID.
      *
-     * @var boolean
+     * @var string
      */
-    private $isDonation;
+    private $id;
 
     /**
-     * The ticket name. (required)
+     * The ticket name.
      *
      * @var string
      */
@@ -37,56 +31,90 @@ class Ticket
     private $description;
 
     /**
-     * The ticket price. Enter 0.00 for free tickets. Leave blank for a donation amount.
-     *
-     * @var float
-     */
-    private $price;
-
-    /**
-     * The number of tickets available. Not required for donations.
+     * 0 for fixed-price tickets, 1 for donations.
      *
      * @var int
      */
-    private $quantity;
+    private $type;
 
     /**
-     * The date and time when ticket sales start,
-     * in ISO 8601 format (e.g., “2007-12-31 23:59:59″)
+     * The maximum ticket quantity per order for this event.
      *
-     * @var \DateTime
+     * @var int
      */
-    private $startSales;
+    private $max;
 
     /**
-     * The date and time when ticket sales stop,
-     * in ISO 8601 format (e.g., "2007-12-31 23:59:59")
-     *
-     * @var \DateTime
-     */
-    private $endSales;
-
-    /**
-     * 0 to add the Eventbrite service fee on top of ticket price, or 1 to include it in the ticket price.
-     * 0 will be used by default if not provided.
-     *
-     * @var boolean
-     */
-    private $includeFee;
-
-    /**
-     * The minimum number of tickets per order.
+     * The minimum ticket quantity per order for this event.
      *
      * @var int
      */
     private $min;
 
     /**
-     * The maximum number of tickets per order.
+     * The ticket currency, in 3-letter ISO 4217 format (e.g., "USD").
+     *
+     * @var string
+     */
+    private $currency;
+
+    /**
+     * The ticket price (not provided if the ticket is a donation).
+     *
+     * @var float
+     */
+    private $price;
+
+    /**
+     * The date and time when ticket sales start, in ISO 8601 format (e.g., "2007-12-31 23:59:59").
+     *
+     * @var \DateTime
+     */
+    private $start_date;
+
+    /**
+     * The date and time when ticket sales stop, in ISO 8601 format (e.g., "2007-12-31 23:59:59").
+     *
+     * @var \DateTime
+     */
+    private $end_date;
+
+    /**
+     * Number of tickets for sale (requires authentication).
      *
      * @var int
      */
-    private $max;
+    private $quantity_available;
+
+    /**
+     * Number of tickets sold (requires authentication).
+     *
+     * @var int
+     */
+    private $quantity_sold;
+
+    /**
+     * A boolean value indicating whether the ticket is visible on the event registration page.
+     *
+     * @var boolean
+     */
+    private $visible;
+
+    /**
+     * @param string $currency
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
 
     /**
      * @param string $description
@@ -105,67 +133,35 @@ class Ticket
     }
 
     /**
-     * @param \DateTime $endSales
+     * @param \DateTime $end_date
      */
-    public function setEndSales(\DateTime $endSales)
+    public function setEndDate($end_date)
     {
-        $this->endSales = $endSales;
+        $this->end_date = $end_date;
     }
 
     /**
      * @return \DateTime
      */
-    public function getEndSales()
+    public function getEndDate()
     {
-        return $this->endSales;
+        return $this->end_date;
     }
 
     /**
-     * @param \SFBCN\EventbriteBundle\Entity\Event $event
+     * @param string $id
      */
-    public function setEvent(\SFBCN\EventbriteBundle\Eventbrite\Event $event)
+    public function setId($id)
     {
-        $this->event = $event;
+        $this->id = $id;
     }
 
     /**
-     * @return \SFBCN\EventbriteBundle\Entity\Event
+     * @return string
      */
-    public function getEvent()
+    public function getId()
     {
-        return $this->event;
-    }
-
-    /**
-     * @param boolean $includeFee
-     */
-    public function setIncludeFee($includeFee)
-    {
-        $this->includeFee = (boolean) $includeFee;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIncludeFee()
-    {
-        return $this->includeFee;
-    }
-
-    /**
-     * @param boolean $isDonation
-     */
-    public function setIsDonation($isDonation)
-    {
-        $this->isDonation = (boolean) $isDonation;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIsDonation()
-    {
-        return $this->isDonation;
+        return $this->id;
     }
 
     /**
@@ -233,34 +229,82 @@ class Ticket
     }
 
     /**
-     * @param int $quantity
+     * @param int $quantity_available
      */
-    public function setQuantity($quantity)
+    public function setQuantityAvailable($quantity_available)
     {
-        $this->quantity = $quantity;
+        $this->quantity_available = $quantity_available;
     }
 
     /**
      * @return int
      */
-    public function getQuantity()
+    public function getQuantityAvailable()
     {
-        return $this->quantity;
+        return $this->quantity_available;
     }
 
     /**
-     * @param \DateTime $startSales
+     * @param int $quantity_sold
      */
-    public function setStartSales(\DateTime $startSales)
+    public function setQuantitySold($quantity_sold)
     {
-        $this->startSales = $startSales;
+        $this->quantity_sold = $quantity_sold;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantitySold()
+    {
+        return $this->quantity_sold;
+    }
+
+    /**
+     * @param \DateTime $start_date
+     */
+    public function setStartDate($start_date)
+    {
+        $this->start_date = $start_date;
     }
 
     /**
      * @return \DateTime
      */
-    public function getStartSales()
+    public function getStartDate()
     {
-        return $this->startSales;
+        return $this->start_date;
+    }
+
+    /**
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param boolean $visible
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
     }
 }

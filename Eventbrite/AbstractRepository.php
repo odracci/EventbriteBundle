@@ -68,8 +68,7 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * Executes a command with a given arguments and maps the
-     * response to the concerned entity
+     * Executes a command with a given arguments
      *
      * @param string $commandName
      * @param array $commandArgs

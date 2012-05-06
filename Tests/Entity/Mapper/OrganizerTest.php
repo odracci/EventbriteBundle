@@ -42,7 +42,11 @@ class OrganizerTest extends \PHPUnit_Framework_TestCase
         $entity = simplexml_load_string(<<<EOX
 <?xml version="1.0" encoding="utf-8"?>
 <organizer>
-    <id>1</id>
+    <description>Test</description>
+    <id>1995458109</id>
+    <long_description>This is a long description</long_description>
+    <name>Test</name>
+    <url>http://www.eventbrite.com/org/1995458109</url>
 </organizer>
 EOX
         );
@@ -50,6 +54,9 @@ EOX
         $result = $this->object->map($entity);
 
         $this->assertInstanceOf('\SFBCN\EventbriteBundle\Entity\Organizer', $result);
-        $this->assertEquals(1, $result->getId());
+        $this->assertEquals('1995458109', $result->getId());
+        $this->assertEquals('Test', $result->getDescription());
+        $this->assertEquals('Test', $result->getName());
+        $this->assertEquals('http://www.eventbrite.com/org/1995458109', $result->getUrl());
     }
 }

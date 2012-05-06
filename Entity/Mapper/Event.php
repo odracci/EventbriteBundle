@@ -5,6 +5,11 @@ namespace SFBCN\EventbriteBundle\Entity\Mapper;
 use SFBCN\EventbriteBundle\Eventbrite\AbstractMapper;
 use SFBCN\EventbriteBundle\Entity\Event as EventEntity;
 
+/**
+ * The event entity mapper
+ *
+ * @author Christian Soronellas <theunic@gmail.com>
+ */
 class Event extends AbstractMapper
 {
     /**
@@ -42,7 +47,17 @@ class Event extends AbstractMapper
         $event->setLogoSsl((string) $entity->logo_ssl);
         $event->setStatus((string) $entity->status);
         $event->setTextColor((string) $entity->text_color);
+
+        // Associated entities
         $event->setOrganizer($this->getMapper()->map($entity->organizer));
+
+        $tickets = array();
+        if (isset($entity->tickets)) {
+            foreach ($entity->tickets->ticket as $ticket) {
+                $tickets[] = $this->getMapper()->map($ticket);
+            }
+        }
+        $event->setTickets($tickets);
 
         return $event;
     }
