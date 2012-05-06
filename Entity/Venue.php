@@ -12,16 +12,9 @@ class Venue
     /**
      * The venue ID
      *
-     * @var int
+     * @var string
      */
     private $id;
-
-    /**
-     * The Eventbrite related organizer
-     *
-     * @var \SFBCN\EventbriteBundle\Entity\Organizer
-     */
-    private $organizer;
 
     /**
      * The venue name. (required)
@@ -67,11 +60,32 @@ class Venue
     private $postalCode;
 
     /**
+     * The venue country name.
+     *
+     * @var string
+     */
+    private $country;
+
+    /**
      * 2-letter country code, according to the ISO-3166-1 alpha-2 format.
      *
      * @var string
      */
     private $countryCode;
+
+    /**
+     * The venue GeoLocation in WGS84 (Longitude).
+     *
+     * @var double
+     */
+    private $longitude;
+
+    /**
+     * The venue GeoLocation in WGS84 (Latitude).
+     *
+     * @var double
+     */
+    private $latitude;
 
     /**
      * @param string $address
@@ -154,22 +168,6 @@ class Venue
     }
 
     /**
-     * @param \SFBCN\EventbriteBundle\Entity\Organizer $organizer
-     */
-    public function setOrganizer(\SFBCN\EventbriteBundle\Eventbrite\Organizer $organizer)
-    {
-        $this->organizer = $organizer;
-    }
-
-    /**
-     * @return \SFBCN\EventbriteBundle\Entity\Organizer
-     */
-    public function getOrganizer()
-    {
-        return $this->organizer;
-    }
-
-    /**
      * @param string $postalCode
      */
     public function setPostalCode($postalCode)
@@ -202,7 +200,7 @@ class Venue
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {
@@ -210,11 +208,67 @@ class Venue
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param float $latitude
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLatLong()
+    {
+        return $this->getLatitude() . ' / ' . $this->getLongitude();
+    }
+
+    /**
+     * @param float $longitude
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     /**
@@ -225,14 +279,16 @@ class Venue
     public function toArray()
     {
         $entity = array(
-            'organizer_id'  => $this->getOrganizer()->getId(),
             'name'          => $this->getName(),
             'address'       => $this->getAddress(),
             'address_2'     => $this->getAddress2(),
             'city'          => $this->getCity(),
             'region'        => $this->getRegion(),
             'postal_code'   => $this->getPostalCode(),
-            'country_code'  => $this->getCountryCode()
+            'country_code'  => $this->getCountryCode(),
+            'latitude'      => $this->getLatitude(),
+            'longitude'     => $this->getLongitude(),
+            'Lat-Long'      => $this->getLatLong()
         );
 
         if (null !== $this->getId()) {

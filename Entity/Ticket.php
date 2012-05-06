@@ -70,28 +70,28 @@ class Ticket
      *
      * @var \DateTime
      */
-    private $start_date;
+    private $startDate;
 
     /**
      * The date and time when ticket sales stop, in ISO 8601 format (e.g., "2007-12-31 23:59:59").
      *
      * @var \DateTime
      */
-    private $end_date;
+    private $endDate;
 
     /**
      * Number of tickets for sale (requires authentication).
      *
      * @var int
      */
-    private $quantity_available;
+    private $quantityAvailable;
 
     /**
      * Number of tickets sold (requires authentication).
      *
      * @var int
      */
-    private $quantity_sold;
+    private $quantitySold;
 
     /**
      * A boolean value indicating whether the ticket is visible on the event registration page.
@@ -137,7 +137,7 @@ class Ticket
      */
     public function setEndDate($end_date)
     {
-        $this->end_date = $end_date;
+        $this->endDate = $end_date;
     }
 
     /**
@@ -145,7 +145,7 @@ class Ticket
      */
     public function getEndDate()
     {
-        return $this->end_date;
+        return $this->endDate;
     }
 
     /**
@@ -233,7 +233,7 @@ class Ticket
      */
     public function setQuantityAvailable($quantity_available)
     {
-        $this->quantity_available = $quantity_available;
+        $this->quantityAvailable = $quantity_available;
     }
 
     /**
@@ -241,7 +241,7 @@ class Ticket
      */
     public function getQuantityAvailable()
     {
-        return $this->quantity_available;
+        return $this->quantityAvailable;
     }
 
     /**
@@ -249,7 +249,7 @@ class Ticket
      */
     public function setQuantitySold($quantity_sold)
     {
-        $this->quantity_sold = $quantity_sold;
+        $this->quantitySold = $quantity_sold;
     }
 
     /**
@@ -257,7 +257,7 @@ class Ticket
      */
     public function getQuantitySold()
     {
-        return $this->quantity_sold;
+        return $this->quantitySold;
     }
 
     /**
@@ -265,7 +265,7 @@ class Ticket
      */
     public function setStartDate($start_date)
     {
-        $this->start_date = $start_date;
+        $this->startDate = $start_date;
     }
 
     /**
@@ -273,7 +273,7 @@ class Ticket
      */
     public function getStartDate()
     {
-        return $this->start_date;
+        return $this->startDate;
     }
 
     /**

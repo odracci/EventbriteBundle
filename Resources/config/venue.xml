@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client>
+    <commands>
+        <!-- venue_get -->
+        <command method="GET" uri="venue_get">
+            <doc>This method retrieves a venue record by id.</doc>
+            <param name="id" doc="A numeric venue ID." location="query" />
+        </command>
+    </commands>
+</client>
