@@ -88,7 +88,7 @@ class EventRepository extends AbstractRepository
      * @param string $eventId
      * @param int $count
      * @param int $page
-     * @param string $doNotDisplay optional
+     * @param string  $doNotDisplay optional
      * @param boolean $showFullBarcodes
      *
      * @return array
