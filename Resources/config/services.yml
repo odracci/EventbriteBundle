@@ -6,6 +6,7 @@ parameters:
   eventbrite.base_repository_class: SFBCN\EventbriteBundle\Eventbrite\AbstractRepository
   eventbrite.events_class: SFBCN\EventbriteBundle\Entity\EventRepository
   eventbrite.organizers_class: SFBCN\EventbriteBundle\Entity\OrganizerRepository
+  eventbrite.venues_class: SFBCN\EventbriteBundle\Entity\VenueRepository
 
 services:
   eventbrite.client:
@@ -37,4 +38,8 @@ services:
 
   eventbrite.organizers:
     class: %eventbrite.organizers_class%
+    parent: eventbrite.abstract_repository
+
+  eventbrite.venues:
+    class: %eventbrite.venues_class%
     parent: eventbrite.abstract_repository

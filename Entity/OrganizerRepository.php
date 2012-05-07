@@ -8,14 +8,13 @@ use SFBCN\EventbriteBundle\Entity\Organizer;
 use SFBCN\EventbriteBundle\Eventbrite\Client;
 
 /**
- * An EventRepository class to extract Organizers from the
+ * An OrganizerRepository class to extract Organizers from the
  * domain model
  *
  * @author Christian Soronellas <theunic@gmail.com>
  */
 class OrganizerRepository extends AbstractRepository
 {
-
     /**
      * Gets a list of the events organized by a given organizer
      *
@@ -37,7 +36,7 @@ class OrganizerRepository extends AbstractRepository
     }
 
     /**
-     * Gets an event by its ID
+     * Gets an organizer by its ID
      *
      * @param int $organizerId
      *

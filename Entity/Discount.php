@@ -4,15 +4,17 @@ namespace SFBCN\EventbriteBundle\Entity;
 
 /**
  * An Eventbrite discount entity
+ *
+ * @author Christian Soronellas <theunic@gmail.com>
  */
 class Discount
 {
     /**
-     * The related event
+     * The discount ID.
      *
-     * @var \SFBCN\EventbriteBundle\Entity\Event
+     * @var string
      */
-    private $event;
+    private $id;
 
     /**
      * The discount code. Spaces, apostrophes and non-alphanumeric characters are not allowed, except for dashes and
@@ -42,7 +44,7 @@ class Discount
      * A list of ticket-type IDs for which the discount applies. If not provided, the discount will apply
      * to all ticket types for this event.
      *
-     * @var array
+     * @var string
      */
     private $tickets;
 
@@ -66,6 +68,45 @@ class Discount
      * @var \DateTime
      */
     private $endDate;
+
+    /**
+     * Number of times this discount has been used.
+     *
+     * @var int
+     */
+    private $quantitySold;
+
+    /**
+     * @param string $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $quantitySold
+     */
+    public function setQuantitySold($quantitySold)
+    {
+        $this->quantitySold = $quantitySold;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantitySold()
+    {
+        return $this->quantitySold;
+    }
 
     /**
      * @param float $amountOff
@@ -113,22 +154,6 @@ class Discount
     public function getEndDate()
     {
         return $this->endDate;
-    }
-
-    /**
-     * @param \SFBCN\EventbriteBundle\Entity\Event $event
-     */
-    public function setEvent(\SFBCN\EventbriteBundle\Eventbrite\Event $event)
-    {
-        $this->event = $event;
-    }
-
-    /**
-     * @return \SFBCN\EventbriteBundle\Entity\Event
-     */
-    public function getEvent()
-    {
-        return $this->event;
     }
 
     /**
@@ -180,11 +205,13 @@ class Discount
     }
 
     /**
-     * @param array $tickets
+     * @param string $tickets
      */
     public function setTickets($tickets)
     {
-        $this->tickets = $tickets;
+        $this->tickets = array_map(function($ticketId) {
+            return trim($ticketId);
+        }, explode(',', $tickets));
     }
 
     /**
@@ -198,8 +225,35 @@ class Discount
     /**
      * @param \SFBCN\EventbriteBundle\Entity\Ticket $ticket
      */
-    public function addTicket(\SFBCN\EventbriteBundle\Eventbrite\Ticket $ticket)
+    public function addTicket(\SFBCN\EventbriteBundle\Entity\Ticket $ticket)
     {
-        $this->tickets[] = $ticket;
+        if (!in_array($ticket->getId(), $this->tickets)) {
+            $this->tickets[] = $ticket;
+        }
+    }
+
+    /**
+     * Serializes the discount entity into an array
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $result = array(
+            'code'                  => $this->getCode(),
+            'amount_off'            => $this->getAmountOff(),
+            'percent_off'           => $this->getPercentOff(),
+            'tickets'               => implode(',', $this->getTickets()),
+            'start_date'            => $this->getStartDate()->format('Y-m-d H:i:s'),
+            'end_date'              => $this->getEndDate()->format('Y-m-d H:i:s'),
+            'quantity_available'    => $this->getQuantityAvailable(),
+            'quantity_sold'         => $this->getQuantitySold()
+        );
+
+        if (null !== $this->getId()) {
+            $result['discount_id'] = $this->getId();
+        }
+
+        return $result;
     }
 }
