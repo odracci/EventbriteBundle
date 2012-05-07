@@ -183,4 +183,50 @@ EOX
 
         $this->assertEquals('#event#', $this->object->copyEvent(1, 'test'));
     }
+
+    /**
+     * @covers \SFBCN\EventbriteBundle\Entity\EventRepository::getDiscounts
+     */
+    public function testGetDiscounts()
+    {
+        $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
+
+        $response = simplexml_load_string(<<<EOX
+<?xml version="1.0" encoding="UTF-8" ?>
+<discounts>
+    <discount>
+        <code>test@gmail.com</code>
+        <discount_id>4748093</discount_id>
+        <percent_off>0.00</percent_off>
+        <quantity_available>1</quantity_available>
+        <quantity_sold>0</quantity_sold>
+        <tickets>all</tickets>
+    </discount>
+    <discount>
+        <code>theunic@gmail.com</code>
+        <discount_id>4748083</discount_id>
+        <percent_off>5.00</percent_off>
+        <quantity_available>1</quantity_available>
+        <quantity_sold>0</quantity_sold>
+        <tickets>all</tickets>
+    </discount>
+</discounts>
+EOX
+        );
+
+        $mapper = m::mock('\SFBCN\EventbriteBundle\Eventbrite\Mapper');
+        $mapper->shouldReceive('map')->twice()->andReturn('#discount1#', '#discount2#');
+
+        $client = m::mock('stdClass');
+        $client->shouldReceive('getCommand')->with('event_list_discounts', array('id' => 'test'))->once()->andReturn($command);
+        $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
+
+        $this->object = new EventRepository($client, $mapper);
+        $result = $this->object->getDiscounts('test');
+
+        $this->assertInternalType('array', $result);
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $this->assertEquals('#discount' . ($i + 1) . '#', $result[$i]);
+        }
+    }
 }

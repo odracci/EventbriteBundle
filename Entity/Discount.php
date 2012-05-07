@@ -209,9 +209,11 @@ class Discount
      */
     public function setTickets($tickets)
     {
-        $this->tickets = array_map(function($ticketId) {
-            return trim($ticketId);
-        }, explode(',', $tickets));
+        if (false !== strpos($tickets, ',')) {
+            $this->tickets = array_map('trim', explode(',', $tickets));
+        } else {
+            $this->tickets = $tickets;
+        }
     }
 
     /**

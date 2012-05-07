@@ -62,4 +62,23 @@ class EventRepository extends AbstractRepository
 
         return $this->findEvent((string) $response->id);
     }
+
+    /**
+     * Returns the list of discount codes for a given event.
+     *
+     * @param string $eventId
+     *
+     * @return array
+     */
+    public function getDiscounts($eventId)
+    {
+        $entities = $this->executeCommand('event_list_discounts', array('id' => $eventId));
+
+        $discounts = array();
+        foreach ($entities->discount as $discount) {
+            $discounts[] = $this->getMapper()->map($discount);
+        }
+
+        return $discounts;
+    }
 }
