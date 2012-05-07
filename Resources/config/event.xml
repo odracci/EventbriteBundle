@@ -2,7 +2,7 @@
 <client>
     <commands>
         <!-- event_search -->
-        <command name="event_search" method="GET" uri="event_search">
+        <command name="event.search" method="GET" uri="event_search">
             <doc>This method uses Eventbrite search index to find publicly listed events.</doc>
             <param location="query" name="keywords" doc="The search keywords. To run an OR search, you need this format: 'keywords=google%20OR%20multimedia'" />
             <param location="query" name="category" doc="Event categories (comma seperated): conference, conventions, entertainment, fundraisers, meetings, other, performances, reunions, sales, seminars, social, sports, tradeshows, travel, religion, fairs, food, music, recreation." />
@@ -28,13 +28,13 @@
         </command>
 
         <!-- event_get -->
-        <command name="event_get" method="GET" uri="event_get">
+        <command name="event.get" method="GET" uri="event_get">
             <doc>This method returns the identified event resource along with any associated ticket, venue, or organizer profile objects. Only public events details are returned if no additional authentication tokens are supplied.</doc>
             <param name="id" doc="The ID of the requested event." required="true" location="query" />
         </command>
 
         <!-- event_new -->
-        <command name="event_new" method="GET" uri="event_new">
+        <command name="event.new" method="GET" uri="event_new">
             <doc>This method creates a new event, returning the ID of the newly created resource.</doc>
             <param name="title" doc="The event title. 255 characters max." location="query" />
             <param name="description" doc="The event description." location="query" />
@@ -62,14 +62,14 @@
         </command>
 
         <!-- event_copy -->
-        <command name="event_copy" method="GET" uri="event_copy">
+        <command name="event.copy" method="GET" uri="event_copy">
             <doc>This method duplicates an existing event, returning the ID of the new event. Events can not be copied from one user account to another.</doc>
             <param name="id" doc="The ID of the existing event." required="true" location="query" />
             <param name="event_name" doc="A new name for this copy of the Event.  255 character limit." location="query" />
         </command>
 
         <!-- event_new -->
-        <command name="event_update" method="GET" uri="event_update">
+        <command name="event.update" method="GET" uri="event_update">
             <doc>This method updates an existing event, returning the event’s id. Event attributes that are omitted will not be modified.</doc>
             <param name="id" doc="The ID of the event to update." location="query" />
             <param name="title" doc="The event title. 255 characters max." location="query" />
@@ -95,6 +95,22 @@
             <param name="box_border_color" doc="Custom hexadecimal color for your registration page. Format: FFFFFF without the pound" location="query" />
             <param name="box_header_background_color" doc="Custom hexadecimal color for your registration page. Format: FFFFFF without the pound" location="query" />
             <param name="box_header_text_color" doc="Custom hexadecimal color for your registration page. Format: FFFFFF without the pound" location="query" />
+        </command>
+
+        <!-- event_list_discounts -->
+        <command name="event.discounts" method="GET" uri="event_list_discounts">
+            <doc>This method returns the list of discount codes for a given event. Authentication tokens are required.</doc>
+            <param name="id" doc="The ID of the event." required="true" location="query" />
+        </command>
+
+        <!-- event_list_atendees -->
+        <command name="event.atendees" method="GET" uri="event_list_atendees">
+            <doc>This method returns a list of attendees for a given event. If authentication tokens are not provided, only publicly available attendee information will be returned.</doc>
+            <param name="id" doc="The ID of the event." required="true" location="query" />
+            <param name="count" doc="Limit the number of attendees returned. Default limit is 50 attendees per page if paginate selected" required="false" location="query" default="50" />
+            <param name="page" doc="Allows for paging through the results of a query. Default is 1. Page size will be setted with 'count' parameter" required="false" default="1" />
+            <param name="do_not_display" doc="Comma separated list without spaces that leaves out certain data returned. Valid options are: profile,answers,address" required="false" />
+            <param name="show_full_barcodes" doc="If set to 'true', it will return all barcodes associates with the attendee, plus the barcode status, device used, attendee_id, and barcode number. If left blank, it will return a comma separated list of barcodes" required="false" />
         </command>
     </commands>
 </client>

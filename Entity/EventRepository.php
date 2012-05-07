@@ -23,7 +23,7 @@ class EventRepository extends AbstractRepository
      */
     public function findEvent($eventId)
     {
-        return $this->getMapper()->map($this->executeCommand('event_get', array('id' => $eventId)));
+        return $this->getMapper()->map($this->executeCommand('event.get', array('id' => $eventId)));
     }
 
     /**
@@ -35,7 +35,7 @@ class EventRepository extends AbstractRepository
      */
     public function searchEvent(array $eventParams)
     {
-        $entities = $this->executeCommand('event_search', $eventParams);
+        $entities = $this->executeCommand('event.search', $eventParams);
 
         $events = array();
         foreach ($entities->event as $entity) {
@@ -58,7 +58,7 @@ class EventRepository extends AbstractRepository
      */
     public function copyEvent($eventId, $newEventName)
     {
-        $response = $this->executeCommand('event_copy', array('id' => $eventId, 'event_name' => $newEventName));
+        $response = $this->executeCommand('event.copy', array('id' => $eventId, 'event_name' => $newEventName));
 
         return $this->findEvent((string) $response->id);
     }
@@ -72,7 +72,7 @@ class EventRepository extends AbstractRepository
      */
     public function getDiscounts($eventId)
     {
-        $entities = $this->executeCommand('event_list_discounts', array('id' => $eventId));
+        $entities = $this->executeCommand('event.discounts', array('id' => $eventId));
 
         $discounts = array();
         foreach ($entities->discount as $discount) {
@@ -80,5 +80,42 @@ class EventRepository extends AbstractRepository
         }
 
         return $discounts;
+    }
+
+    /**
+     * Returns the list of atendees for a given even
+     *
+     * @param string $eventId
+     * @param int $count
+     * @param int $page
+     * @param string $doNotDisplay optional
+     * @param boolean $showFullBarcodes
+     *
+     * @return array
+     */
+    public function getAtendees($eventId, $count = 50, $page = 1, $doNotDisplay = null, $showFullBarcodes = false)
+    {
+        $params = array(
+            'id' => $eventId,
+            'count' => $count,
+            'page' => $page
+        );
+
+        if (null !== $doNotDisplay) {
+            $params['do_not_display'] = $doNotDisplay;
+        }
+
+        if (false !== $showFullBarcodes) {
+            $params['show_full_barcodes'] = $showFullBarcodes;
+        }
+
+        $entities = $this->executeCommand('event.atendees', $params);
+
+        $atendees = array();
+        foreach ($entities->atendee as $atendee) {
+            $atendees[] = $this->getMapper()->map($atendee);
+        }
+
+        return $atendees;
     }
 }

@@ -103,7 +103,7 @@ EOX
         $mapper->shouldReceive('map')->with($response)->once()->andReturn('#event#');
 
         $client = m::mock('stdClass');
-        $client->shouldReceive('getCommand')->with('event_get', array('id' => 1))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('event.get', array('id' => 1))->once()->andReturn($command);
         $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
 
         $this->object = new EventRepository($client, $mapper);
@@ -136,7 +136,7 @@ EOX
         $mapper->shouldReceive('map')->twice()->andReturn('#event1#', '#event2#');
 
         $client = m::mock('stdClass');
-        $client->shouldReceive('getCommand')->with('event_search', array('test' => 'test'))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('event.search', array('test' => 'test'))->once()->andReturn($command);
         $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
 
         $this->object = new EventRepository($client, $mapper);
@@ -172,8 +172,8 @@ EOX
         );
 
         $client = m::mock('stdClass');
-        $client->shouldReceive('getCommand')->with('event_copy', array('id' => 1, 'event_name' => 'test'))->once()->andReturn($command);
-        $client->shouldReceive('getCommand')->with('event_get', array('id' => 2))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('event.copy', array('id' => 1, 'event_name' => 'test'))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('event.get', array('id' => 2))->once()->andReturn($command);
         $client->shouldReceive('execute')->twice()->andReturn($searchResponse, $findResponse);
 
         $mapper = m::mock('\SFBCN\EventbriteBundle\Eventbrite\Mapper');
@@ -218,7 +218,7 @@ EOX
         $mapper->shouldReceive('map')->twice()->andReturn('#discount1#', '#discount2#');
 
         $client = m::mock('stdClass');
-        $client->shouldReceive('getCommand')->with('event_list_discounts', array('id' => 'test'))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('event.discounts', array('id' => 'test'))->once()->andReturn($command);
         $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
 
         $this->object = new EventRepository($client, $mapper);
@@ -227,6 +227,39 @@ EOX
         $this->assertInternalType('array', $result);
         for ($i = 0; $i < sizeof($result); $i++) {
             $this->assertEquals('#discount' . ($i + 1) . '#', $result[$i]);
+        }
+    }
+
+    /**
+     * @covers \SFBCN\EventbriteBundle\Entity\EventRepository::getAtendees
+     */
+    public function testGetAtendees()
+    {
+        $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
+
+        $response = simplexml_load_string(<<<EOX
+<?xml version="1.0" encoding="UTF-8" ?>
+<atendees>
+    <atendee>
+        <id>1</id>
+    </atendee>
+</atendees>
+EOX
+        );
+
+        $mapper = m::mock('\SFBCN\EventbriteBundle\Eventbrite\Mapper');
+        $mapper->shouldReceive('map')->once()->andReturn('#atendee1#');
+
+        $client = m::mock('stdClass');
+        $client->shouldReceive('getCommand')->with('event.atendees', array('id' => '1', 'count' => 50, 'page' => 1))->once()->andReturn($command);
+        $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
+
+        $this->object = new EventRepository($client, $mapper);
+        $result = $this->object->getAtendees('1');
+
+        $this->assertInternalType('array', $result);
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $this->assertEquals('#atendee' . ($i + 1) . '#', $result[$i]);
         }
     }
 }
