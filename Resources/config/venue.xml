@@ -2,9 +2,35 @@
 <client>
     <commands>
         <!-- venue_get -->
-        <command method="GET" uri="venue_get">
+        <command name="venue.get" method="GET" uri="venue_get">
             <doc>This method retrieves a venue record by id.</doc>
             <param name="id" doc="A numeric venue ID." location="query" />
+        </command>
+
+        <!-- venue_new -->
+        <command name="venue.new" method="GET" uri="venue_new">
+            <doc>This method creates a new venue. It returns the ID of the newly created venue.</doc>
+            <param name="organizer_id" doc="The ID of the related organizer. (required)" required="true" location="query" />
+            <param name="name" doc="The venue name. (required)" required="true" location="query" />
+            <param name="address" doc="The venue adress (line 1)." location="query" />
+            <param name="address_2" doc="The venue adress (line 2)." location="query" />
+            <param name="city" doc="The venue city." location="query" />
+            <param name="region" doc="The venue state/province/county/territory depending on the country. 2-letter state code is required for US addresses." location="query" />
+            <param name="postal_code" doc="The postal code of the venue. (optional)" location="query" required="false" />
+            <param name="country_code" doc="2-letter country code, according to the ISO-3166-1 alpha-2 format." location="query" />
+        </command>
+
+        <!-- venue_update -->
+        <command name="venue.update" method="GET" uri="venue_update">
+            <doc>This method updates an existing venue. Only the fields passed as arguments will be modified. It returns the ID of the updated venue.</doc>
+            <param name="id" doc="The venue ID." location="query" required="true" />
+            <param name="name" doc="The venue name. (required)" required="true" location="query" />
+            <param name="address" doc="The venue adress (line 1)." location="query" />
+            <param name="address_2" doc="The venue adress (line 2)." location="query" />
+            <param name="city" doc="The venue city." location="query" />
+            <param name="region" doc="The venue state/province/county/territory depending on the country. 2-letter state code is required for US addresses." location="query" />
+            <param name="postal_code" doc="The postal code of the venue. (optional)" location="query" required="false" />
+            <param name="country_code" doc="2-letter country code, according to the ISO-3166-1 alpha-2 format." location="query" />
         </command>
     </commands>
 </client>

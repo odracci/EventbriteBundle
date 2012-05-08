@@ -36,13 +36,16 @@ class PersisterTest extends \PHPUnit_Framework_TestCase
     public function saveDataProvider()
     {
         return array(
-            array('_new', false),
-            array('_update', true)
+            array('.new', false),
+            array('.update', true)
         );
     }
 
     /**
      * Test case for SFBCN\EventbriteBundle\Eventbrite\Service::save
+     *
+     * @param string $suffix
+     * @param boolean $forceUpdate
      *
      * @covers SFBCN\EventbriteBundle\Eventbrite\Service::save
      * @dataProvider saveDataProvider

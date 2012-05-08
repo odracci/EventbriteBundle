@@ -4,7 +4,6 @@ namespace SFBCN\EventbriteBundle\Entity;
 
 use SFBCN\EventbriteBundle\Eventbrite\AbstractRepository;
 use SFBCN\EventbriteBundle\Entity\Event;
-use SFBCN\EventbriteBundle\Eventbrite\Client;
 
 /**
  * An EventRepository class to extract Events from the

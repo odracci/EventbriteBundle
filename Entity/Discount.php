@@ -77,6 +77,11 @@ class Discount
     private $quantitySold;
 
     /**
+     * @var \SFBCN\EventbriteBundle\Entity\Event
+     */
+    private $event;
+
+    /**
      * @param string $id
      */
     public function setId($id)
@@ -235,12 +240,32 @@ class Discount
     }
 
     /**
+     * @param \SFBCN\EventbriteBundle\Entity\Event $event
+     */
+    public function setEvent($event)
+    {
+        $this->event = $event;
+    }
+
+    /**
+     * @return \SFBCN\EventbriteBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
      * Serializes the discount entity into an array
      *
      * @return array
      */
     public function toArray()
     {
+        if (null === $this->getId() && null === $this->getEvent()) {
+            throw new \BadMethodCallException('To serialize a discount into an array a Event must be provided');
+        }
+
         $result = array(
             'code'                  => $this->getCode(),
             'amount_off'            => $this->getAmountOff(),
@@ -254,6 +279,8 @@ class Discount
 
         if (null !== $this->getId()) {
             $result['discount_id'] = $this->getId();
+        } else {
+            $result['event_id'] = $this->getEvent()->getId();
         }
 
         return $result;

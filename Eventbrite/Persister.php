@@ -105,6 +105,6 @@ class Persister
             $class = $class[0];
         }
 
-        return strtolower($class) . '_' . ($forUpdate ? 'update' : 'new');
+        return strtolower($class) . '.' . ($forUpdate ? 'update' : 'new');
     }
 }

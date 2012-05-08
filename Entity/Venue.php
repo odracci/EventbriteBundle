@@ -88,6 +88,11 @@ class Venue
     private $latitude;
 
     /**
+     * @var \SFBCN\EventbriteBundle\Entity\Organizer
+     */
+    private $organizer;
+
+    /**
      * @param string $address
      */
     public function setAddress($address)
@@ -272,12 +277,32 @@ class Venue
     }
 
     /**
+     * @param \SFBCN\EventbriteBundle\Entity\Organizer $organizer
+     */
+    public function setOrganizer($organizer)
+    {
+        $this->organizer = $organizer;
+    }
+
+    /**
+     * @return \SFBCN\EventbriteBundle\Entity\Organizer
+     */
+    public function getOrganizer()
+    {
+        return $this->organizer;
+    }
+
+    /**
      * Serializes a Venue into an array
      *
      * @return array
      */
     public function toArray()
     {
+        if (null === $this->getId() && null === $this->getOrganizer()) {
+            throw new \BadMethodCallException('In order to serialize a Venue into an array, a Organizer must be specified');
+        }
+
         $entity = array(
             'name'          => $this->getName(),
             'address'       => $this->getAddress(),
@@ -293,6 +318,8 @@ class Venue
 
         if (null !== $this->getId()) {
             $entity['id'] = $this->getId();
+        } else {
+            $entity['organizer_id'] = $this->getOrganizer()->getId();
         }
 
         return $entity;

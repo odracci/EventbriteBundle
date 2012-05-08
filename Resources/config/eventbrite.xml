@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <client>
     <includes>
+        <include path="discount.xml" />
         <include path="event.xml" />
         <include path="organizer.xml" />
+        <include path="payment.xml" />
+        <include path="ticket.xml" />
+        <include path="user.xml" />
+        <include path="venue.xml" />
     </includes>
 </client>

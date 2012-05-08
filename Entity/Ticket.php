@@ -101,6 +101,16 @@ class Ticket
     private $visible;
 
     /**
+     * @var \SFBCN\EventbriteBundle\Entity\Event
+     */
+    private $event;
+
+    /**
+     * @var boolean
+     */
+    private $includeFee = false;
+
+    /**
      * @param string $currency
      */
     public function setCurrency($currency)
@@ -306,5 +316,72 @@ class Ticket
     public function getVisible()
     {
         return $this->visible;
+    }
+
+    /**
+     * @param \SFBCN\EventbriteBundle\Entity\Event $event
+     */
+    public function setEvent(\SFBCN\EventbriteBundle\Entity\Event $event)
+    {
+        $this->event = $event;
+    }
+
+    /**
+     * @return \SFBCN\EventbriteBundle\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param boolean $includeFee
+     */
+    public function setIncludeFee($includeFee)
+    {
+        $this->includeFee = $includeFee;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIncludeFee()
+    {
+        return $this->includeFee;
+    }
+
+    /**
+     * Serializes a ticket entity into an array
+     *
+     * @throws \BadMethodCallException
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        if (null === $this->getId() && null === $this->getEvent()) {
+            throw new \BadMethodCallException('To serialize a ticket into an array a Event must be specified');
+        }
+
+        $entity = array(
+            'is_donation' => $this->getType(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'price' => $this->getPrice(),
+            'quantity' => $this->getQuantityAvailable(),
+            'start_sales' => $this->getStartDate()->format('Y-m-d H:i:s'),
+            'end_sales' => $this->getEndDate()->format('Y-m-d H:i:s'),
+            'include_fee' => $this->getIncludeFee(),
+            'min' => $this->getMin(),
+            'max' => $this->getMax()
+        );
+
+        if (null !== $this->getId()) {
+            $entity['id'] = $this->getId();
+        } else {
+            $entity['event_id'] = $this->getEvent()->getId();
+        }
+
+        return $entity;
     }
 }

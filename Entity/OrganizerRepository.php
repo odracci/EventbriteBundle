@@ -3,9 +3,7 @@
 namespace SFBCN\EventbriteBundle\Entity;
 
 use SFBCN\EventbriteBundle\Eventbrite\AbstractRepository;
-use SFBCN\EventbriteBundle\Entity\EventRepository;
 use SFBCN\EventbriteBundle\Entity\Organizer;
-use SFBCN\EventbriteBundle\Eventbrite\Client;
 
 /**
  * An OrganizerRepository class to extract Organizers from the
@@ -25,7 +23,7 @@ class OrganizerRepository extends AbstractRepository
      */
     public function getOrganizerEvents(Organizer $organizer)
     {
-        $response = $this->executeCommand('organizer_list_events', array('id' => $organizer->getId()));
+        $response = $this->executeCommand('organizer.events', array('id' => $organizer->getId()));
 
         $events = array();
         foreach ($response->events as $event) {
@@ -44,6 +42,6 @@ class OrganizerRepository extends AbstractRepository
      */
     public function findOrganizer($organizerId)
     {
-        return $this->getMapper()->map($this->executeCommand('organizer_get', array('id' => $organizerId)));
+        return $this->getMapper()->map($this->executeCommand('organizer.get', array('id' => $organizerId)));
     }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client>
+    <commands>
+        <!-- payment_update -->
+        <command name="payment.new" method="GET" uri="payment_update">
+            <doc>This method creates or updates the payment options for this event. Only the fields passed as arguments will be modified. It returns the list of active methods of payment. Payment methods can only be updated before your event goes live.</doc>
+            <param name="event_id" doc="The event ID." required="true" location="query" />
+            <param name="accept_paypal" doc="Accept PayPal payments (1 or 0)." location="query" type="boolean" />
+            <param name="paypal_email" doc="Your PayPal email. Defaults to the user email address if not provided." location="query" required="false" />
+            <param name="accept_google" doc="Accept Google Checkout payments (1 or 0)." location="query" type="boolean" />
+            <param name="google_merchant_id" doc="Google Checkout Merchant ID. Required if accept_google is 1." location="query" />
+            <param name="google_merchant_key" doc="Google Checkout Merchant Key. Required if accept_google is 1." location="query" />
+            <param name="accept_check" doc="Accept 'Pay by Check' payments (1 or 0)." location="query" />
+            <param name="instructions_check" doc="Instructions to attendees who want to pay by check." location="query" />
+            <param name="accept_cash" doc="Accept 'Pay with Cash' payments (1 or 0)." location="query" type="boolean" />
+            <param name="instructions_cash" doc="Instructions to attendees who want to pay with cash." location="query" />
+            <param name="accept_invoice" doc="Accept 'Send an Invoice' payments (1 or 0)." location="query" type="boolean" />
+            <param name="instructions_invoice" doc="Instructions to attendees who need to be sent an invoice." location="query" />
+        </command>
+
+        <!-- payment_update -->
+        <command name="payment.update" method="GET" uri="payment_update">
+            <doc>This method creates or updates the payment options for this event. Only the fields passed as arguments will be modified. It returns the list of active methods of payment. Payment methods can only be updated before your event goes live.</doc>
+            <param name="event_id" doc="The event ID." required="true" location="query" />
+            <param name="accept_paypal" doc="Accept PayPal payments (1 or 0)." location="query" type="boolean" />
+            <param name="paypal_email" doc="Your PayPal email. Defaults to the user email address if not provided." location="query" required="false" />
+            <param name="accept_google" doc="Accept Google Checkout payments (1 or 0)." location="query" type="boolean" />
+            <param name="google_merchant_id" doc="Google Checkout Merchant ID. Required if accept_google is 1." location="query" />
+            <param name="google_merchant_key" doc="Google Checkout Merchant Key. Required if accept_google is 1." location="query" />
+            <param name="accept_check" doc="Accept 'Pay by Check' payments (1 or 0)." location="query" />
+            <param name="instructions_check" doc="Instructions to attendees who want to pay by check." location="query" />
+            <param name="accept_cash" doc="Accept 'Pay with Cash' payments (1 or 0)." location="query" type="boolean" />
+            <param name="instructions_cash" doc="Instructions to attendees who want to pay with cash." location="query" />
+            <param name="accept_invoice" doc="Accept 'Send an Invoice' payments (1 or 0)." location="query" type="boolean" />
+            <param name="instructions_invoice" doc="Instructions to attendees who need to be sent an invoice." location="query" />
+        </command>
+    </commands>
+</client>

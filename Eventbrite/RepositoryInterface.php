@@ -18,5 +18,5 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function executeCommand($commandName, array $commandArgs);
+    public function executeCommand($commandName, array $commandArgs = array());
 }

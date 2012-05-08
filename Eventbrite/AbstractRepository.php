@@ -76,7 +76,7 @@ abstract class AbstractRepository implements RepositoryInterface
      * @throw \SFBCN\EventbriteBundle\Eventbrite\Client\Exception
      * @return \SimpleXMLElement
      */
-    public function executeCommand($commandName, array $commandArgs)
+    public function executeCommand($commandName, array $commandArgs = array())
     {
         $command = $this->getClient()->getCommand($commandName, $commandArgs);
         $response = $this->getClient()->execute($command);

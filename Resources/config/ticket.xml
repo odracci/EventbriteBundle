@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client>
+    <commands>
+        <!-- ticket_new -->
+        <command name="ticket.new" method="GET" uri="ticket_new">
+            <doc>This method creates new ticket types for an event, returning the ID of the newly created ticket type. Ticket purchases result in new attendee records.</doc>
+            <param name="event_id" doc="A numeric event ID is required for each ticket type." required="true" location="query" />
+            <param name="is_donation" doc="0 for fixed-price tickets, 1 for donations. 0 will be used by default if not provided." required="false" default="0" location="query" />
+            <param name="name" doc="The ticket name. (required)" required="true" location="query" />
+            <param name="description" doc="The ticket description." location="query" />
+            <param name="price" doc="The ticket price. Enter 0.00 for free tickets. Leave blank for a donation amount." location="query" required="false" />
+            <param name="quantity" doc="The number of tickets available. Not required for donations." location="query" />
+            <param name="start_sales" doc="The date and time when ticket sales start, in ISO 8601 format (e.g., '2007-12-31 23:59:59').ISO 8601" location="query" />
+            <param name="end_sales" doc="The date and time when ticket sales stop, in ISO 8601 format (e.g., '2007-12-31 23:59:59').ISO 8601" location="query" />
+            <param name="include_fee" doc="0 to add the Eventbrite service fee on top of ticket price, or 1 to include it in the ticket price. 0 will be used by default if not provided." required="false" default="0" />
+            <param name="min" doc="The minimum number of tickets per order." location="query" />
+            <param name="max" doc="The maximum number of tickets per order." location="query" />
+        </command>
+
+        <!-- ticket_update -->
+        <command name="ticket.update" method="GET" uri="ticket_update">
+            <doc>This method updates an existing ticket type, returning the ID of the updated ticket. Only the fields passed as arguments will be modified.</doc>
+            <param name="id" doc="The ticket type ID (required)" location="query" required="true" />
+            <param name="is_donation" doc="0 for fixed-price tickets, 1 for donations. 0 will be used by default if not provided." required="false" default="0" location="query" />
+            <param name="name" doc="The ticket name. (required)" required="true" location="query" />
+            <param name="description" doc="The ticket description." location="query" />
+            <param name="price" doc="The ticket price. Enter 0.00 for free tickets. Leave blank for a donation amount." location="query" required="false" />
+            <param name="quantity" doc="The number of tickets available. Not required for donations." location="query" />
+            <param name="start_sales" doc="The date and time when ticket sales start, in ISO 8601 format (e.g., '2007-12-31 23:59:59').ISO 8601" location="query" />
+            <param name="end_sales" doc="The date and time when ticket sales stop, in ISO 8601 format (e.g., '2007-12-31 23:59:59').ISO 8601" location="query" />
+            <param name="include_fee" doc="0 to add the Eventbrite service fee on top of ticket price, or 1 to include it in the ticket price. 0 will be used by default if not provided." required="false" default="0" />
+            <param name="min" doc="The minimum number of tickets per order." location="query" />
+            <param name="max" doc="The maximum number of tickets per order." location="query" />
+        </command>
+    </commands>
+</client>

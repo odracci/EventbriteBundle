@@ -52,7 +52,7 @@ EOX
         $organizer->setId(1);
 
         $client = m::mock('stdClass');
-        $client->shouldReceive('getCommand')->with('organizer_list_events', array('id' => 1))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('organizer.events', array('id' => 1))->once()->andReturn($command);
         $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
 
         $this->object = new OrganizerRepository($client, $mapper);
@@ -86,7 +86,7 @@ EOX
         $mapper->shouldReceive('map')->with($response)->once()->andReturn('#organizer#');
 
         $client = m::mock('stdClass');
-        $client->shouldReceive('getCommand')->with('organizer_get', array('id' => 1))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('organizer.get', array('id' => 1))->once()->andReturn($command);
         $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
 
         $this->object = new OrganizerRepository($client, $mapper);

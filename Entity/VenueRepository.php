@@ -3,9 +3,6 @@
 namespace SFBCN\EventbriteBundle\Entity;
 
 use SFBCN\EventbriteBundle\Eventbrite\AbstractRepository;
-use SFBCN\EventbriteBundle\Entity\EventRepository;
-use SFBCN\EventbriteBundle\Entity\Organizer;
-use SFBCN\EventbriteBundle\Eventbrite\Client;
 
 /**
  * An VenueRepository class to extract Venues from the
@@ -24,6 +21,6 @@ class VenueRepository extends AbstractRepository
      */
     public function findVenue($venueId)
     {
-        return $this->getMapper()->map($this->executeCommand('venue_get', array('id' => $venueId)));
+        return $this->getMapper()->map($this->executeCommand('venue.get', array('id' => $venueId)));
     }
 }

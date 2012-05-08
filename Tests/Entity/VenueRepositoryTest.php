@@ -26,9 +26,9 @@ class VenueRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers SFBCN\EventbriteBundle\Entity\OrganizerRepository::findOrganizer
+     * @covers SFBCN\EventbriteBundle\Entity\OrganizerRepository::findVenue
      */
-    public function testFindOrganizer()
+    public function testFindVenue()
     {
         $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
 
@@ -55,7 +55,7 @@ EOX
         $mapper->shouldReceive('map')->with($response)->once()->andReturn('#venue#');
 
         $client = m::mock('stdClass');
-        $client->shouldReceive('getCommand')->with('venue_get', array('id' => 1))->once()->andReturn($command);
+        $client->shouldReceive('getCommand')->with('venue.get', array('id' => 1))->once()->andReturn($command);
         $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
 
         $this->object = new VenueRepository($client, $mapper);

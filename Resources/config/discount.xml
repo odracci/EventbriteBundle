@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client>
+    <commands>
+        <!-- discount_new -->
+        <command name="discount.new" method="GET" uri="discount_new">
+            <doc>This method creates a new discount code for a specific event, returning the ID of the newly created discount code.</doc>
+            <param name="event_id" doc="A numeric event ID is required for each discount code." required="true" location="query" />
+            <param name="code" doc="The discount code. Spaces, apostrophes and non-alphanumeric characters are not allowed, except for dashes and underscores. Examples: 'earlybirdspecial_08', 'membersonly', 'dc121232'" location="query" />
+            <param name="amount_off" doc="The fixed amount off the ticket price. Each discount code can have a fixed discount amount or a variable (percentage) discount amount, but not both" location="query" />
+            <param name="percent_off" doc="The percentage off the ticket price. Each discount code can have a fixed discount amount or a variable (percentage) discount amount, but not both" location="query" />
+            <param name="tickets" doc="Comma-separated list of ticket-type IDs for which the discount applies. If not provided, the discount will apply to all ticket types for this event." location="query" />
+            <param name="quantity_available" doc="Maximum number of times this discount can be used. If not provided, no maximum is set." location="query" />
+            <param name="start_date" doc="The discount start date and time, in ISO 8601 format (e.g., '2007-12-31 23:59:59')." location="query" />
+            <param name="end_date" doc="The discount end date and time, in ISO 8601 format (e.g., '2007-12-31 23:59:59')." location="query" />
+        </command>
+
+        <!-- discount_update -->
+        <command name="discount.update" method="GET" uri="discount_update">
+            <doc>This method is used to update an existing discount code. Only the fields passed as arguments will be modified. This method returns the ID of the modified discount code.</doc>
+            <param name="id" doc="The discount ID to update." location="query" required="true" />
+            <param name="code" doc="The discount code. Spaces, apostrophes and non-alphanumeric characters are not allowed, except for dashes and underscores. Examples: 'earlybirdspecial_08', 'membersonly', 'dc121232'" location="query" />
+            <param name="amount_off" doc="The fixed amount off the ticket price. Each discount code can have a fixed discount amount or a variable (percentage) discount amount, but not both" location="query" />
+            <param name="percent_off" doc="The percentage off the ticket price. Each discount code can have a fixed discount amount or a variable (percentage) discount amount, but not both" location="query" />
+            <param name="tickets" doc="Comma-separated list of ticket-type IDs for which the discount applies. If not provided, the discount will apply to all ticket types for this event." location="query" />
+            <param name="quantity_available" doc="Maximum number of times this discount can be used. If not provided, no maximum is set." location="query" />
+            <param name="start_date" doc="The discount start date and time, in ISO 8601 format (e.g., '2007-12-31 23:59:59')." location="query" />
+            <param name="end_date" doc="The discount end date and time, in ISO 8601 format (e.g., '2007-12-31 23:59:59')." location="query" />
+        </command>
+    </commands>
+</client>

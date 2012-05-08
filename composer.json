@@ -1,6 +1,7 @@
 {
     "name": "SFBCN/EventbriteBundle",
     "description": "A bundle to interact with the Eventbrite API",
+    "version": "0.1.0",
     "require": {
         "guzzle/guzzle": "v2.4.1"
     },

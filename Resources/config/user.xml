@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<client>
+    <commands>
+        <!-- user_list_events -->
+        <command method="GET" name="user.events" uri="user_list_events">
+            <doc>This method lists the events created by the authenticated user. Public events may optionally be returned if no authentication tokens are submitted.</doc>
+            <param name="user" doc="Find public events by supplying a user's email address. The default response will include public and private events from the authenticated user if any authentication tokens are supplied." required="true" location="query" />
+            <param name="do_not_display" doc="Comma separated list without spaces. Valid options include: description,venue,logo,style,organizer,tickets" required="false" location="query" />
+            <param name="event_statuses" doc="Comma separated list without spaces. Valid options include: live, started, or ended" required="false" location="query" />
+            <param name="asc_or_desc" doc="Valid options include 'asc' or results in ascending order or 'desc' or descending order based on event start_date." required="false" location="query" />
+        </command>
+
+        <!-- user_list_tickets -->
+        <!-- TODO: Provide support for this API method -->
+        <!--
+        <command method="GET" name="user.tickets" uri="user_list_tickets">
+            <doc>This method lists the upcoming tickets purchased by the authenticated user. Tickets to free events are included.</doc>
+            <param name="type" location="query" doc="Filter on 'public', 'private', or 'all'. Default is 'public'." default="public" />
+        </command>
+        -->
+
+        <!-- user_list_venues -->
+        <command method="GET" name="user.venues" uri="user_list_venues">
+            <doc>This method lists the venues created by the authenticated user.</doc>
+        </command>
+
+        <!-- user_list_organizers -->
+        <command method="GET" name="user.organizers" uri="user_list_organizers">
+            <doc>This method lists the organizers profiles that have been created by the authorized user.</doc>
+        </command>
+
+        <!-- user_get -->
+        <command method="GET" name="user.get" uri="user_get">
+            <doc>This method’s default response returns the user account identified by the supplied authorization credentials.</doc>
+            <param name="user_id" location="query" doc="The ID of the subuser account." required="false" />
+            <param name="email" location="query" doc="The email address of the subuser account." required="false" />
+        </command>
+
+        <!-- user_new -->
+        <command method="GET" name="user.new" uri="user_new">
+            <doc>This method creates a new user, returning the user’s ID in the response.</doc>
+            <param name="email" doc="The user email address." required="true" location="query" />
+            <param name="passwd" doc="The user password. (needs to be at least 4 characters long)" required="true" location="query" />
+        </command>
+
+        <!-- user_update -->
+        <command method="GET" name="user.update" uri="user_update">
+            <doc>Be careful! This method updates an existing user account. Only the fields passed as arguments will be modified.</doc>
+            <param name="new_email" doc="The authenticated user's new or updated email address." required="true" location="query" />
+            <param name="new_password" doc="The authenticated user's new password (needs to be at least 4 characters long)." required="true" location="query" />
+        </command>
+    </commands>
+</client>
