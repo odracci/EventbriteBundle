@@ -10,11 +10,18 @@ namespace SFBCN\EventbriteBundle\Entity;
 class Atendee
 {
     /**
-     * The event ID.
+     * The atendee ID
      *
      * @var string
      */
     private $id;
+
+    /**
+     * Th event id
+     *
+     * @var string
+     */
+    private $event_id;
 
     /**
      * @var string
@@ -59,7 +66,7 @@ class Atendee
     /**
      * The type/status of order (Free Order, PayPal Completed, Pay By Check, etc).
      *
-     * @var int
+     * @var string
      */
     private $order_type;
 
@@ -822,7 +829,7 @@ class Atendee
     }
 
     /**
-     * @param int $order_type
+     * @param string $order_type
      */
     public function setOrderType($order_type)
     {
@@ -830,7 +837,7 @@ class Atendee
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getOrderType()
     {
@@ -1155,5 +1162,21 @@ class Atendee
     public function getWorkRegion()
     {
         return $this->work_region;
+    }
+
+    /**
+     * @param string $event_id
+     */
+    public function setEventId($event_id)
+    {
+        $this->event_id = $event_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEventId()
+    {
+        return $this->event_id;
     }
 }

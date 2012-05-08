@@ -26,7 +26,7 @@ class Atendee extends AbstractMapper
         $atendee->setAge((int) $entity->age);
         $atendee->setAmountPaid((float) $entity->amount_paid);
         $atendee->setAnswers((array) $entity->answers);
-        $atendee->setBarcode($entity->barcode);
+        $atendee->setBarcode((string) $entity->barcode);
         $atendee->setBirthDate(\DateTime::createFromFormat('Y-m-d', (string) $entity->birthdate));
         $atendee->setBlog((string) $entity->blog);
         $atendee->setCellPhone((string) $entity->cell_phone);
@@ -36,6 +36,7 @@ class Atendee extends AbstractMapper
         $atendee->setDiscount((string) $entity->discount);
         $atendee->setEmail((string) $entity->email);
         $atendee->setEventDate(\DateTime::createFromFormat('Y-m-d H:i:s', (string) $entity->event_date));
+        $atendee->setEventId((string) $entity->event_id);
         $atendee->setFirstName((string) $entity->first_name);
         $atendee->setGender((string) $entity->gender);
         $atendee->setHomeAddress((string) $entity->home_address);
@@ -52,7 +53,7 @@ class Atendee extends AbstractMapper
         $atendee->setModified(\DateTime::createFromFormat('Y-m-d H:i:s', (string) $entity->modified));
         $atendee->setNotes((string) $entity->notes);
         $atendee->setOrderId((string) $entity->order_id);
-        $atendee->setOrderType((int) $entity->order_type);
+        $atendee->setOrderType((string) $entity->order_type);
         $atendee->setPrefix((string) $entity->prefix);
         $atendee->setQuantity((int) $entity->quantity);
         $atendee->setShipAddress((string) $entity->ship_address);
