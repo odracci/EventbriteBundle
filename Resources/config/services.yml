@@ -3,6 +3,7 @@ parameters:
   eventbrite.client_factory_class: SFBCN\EventbriteBundle\Eventbrite\ClientFactory
   eventbrite.base_url: "https://www.eventbrite.com/xml/"
   eventbrite.persister_class: SFBCN\EventbriteBundle\Eventbrite\Persister
+  eventbrite.mapper_class: SFBCN\EventbriteBundle\Eventbrite\Mapper
   eventbrite.base_repository_class: SFBCN\EventbriteBundle\Eventbrite\AbstractRepository
   eventbrite.events_class: SFBCN\EventbriteBundle\Entity\EventRepository
   eventbrite.organizers_class: SFBCN\EventbriteBundle\Entity\OrganizerRepository
@@ -24,7 +25,7 @@ services:
       [@eventbrite.client]
 
   eventbrite.mapper:
-    class: %eventbrite.mapper%
+    class: %eventbrite.mapper_class%
 
   eventbrite.abstract_repository:
     class:     %eventbrite.base_repository_class%
