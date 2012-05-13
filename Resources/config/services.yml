@@ -37,15 +37,19 @@ services:
   eventbrite.events:
     class: %eventbrite.events_class%
     parent: eventbrite.abstract_repository
+    public: true
 
   eventbrite.organizers:
     class: %eventbrite.organizers_class%
     parent: eventbrite.abstract_repository
+    public: true
 
   eventbrite.venues:
     class: %eventbrite.venues_class%
     parent: eventbrite.abstract_repository
+    public: true
 
   eventbrite.users:
     class: %eventbrite.users_class%
     parent: eventbrite.abstract_repository
+    public: true
