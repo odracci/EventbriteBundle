@@ -75,7 +75,7 @@ class Payment
     /**
      * Instructions to attendees who want to pay with cash.
      *
-     * @var boolean
+     * @var string
      */
     private $instructions_cash;
 
@@ -223,7 +223,7 @@ class Payment
     }
 
     /**
-     * @param boolean $instructions_cash
+     * @param string $instructions_cash
      */
     public function setInstructionsCash($instructions_cash)
     {
@@ -231,7 +231,7 @@ class Payment
     }
 
     /**
-     * @return boolean
+     * @return string
      */
     public function getInstructionsCash()
     {

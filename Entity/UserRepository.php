@@ -70,7 +70,7 @@ class UserRepository extends AbstractRepository
      */
     public function getVenues()
     {
-        $entities = $this->executeCommand('user.events');
+        $entities = $this->executeCommand('user.venues');
 
         $venues = array();
         foreach ($entities as $entity) {

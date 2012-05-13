@@ -53,37 +53,97 @@ EOX
 
     /**
      * @covers SFBCN\EventbriteBundle\Entity\UserRepository::getEvents
-     * @todo   Implement testGetEvents().
      */
     public function testGetEvents()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
+        $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
+
+        $response = simplexml_load_string(<<<EOX
+<?xml version="1.0" encoding="UTF-8" ?>
+<events>
+    <event><id>1</id></event>
+    <event><id>2</id></event>
+</events>
+EOX
         );
+
+        $mapper = m::mock('\SFBCN\EventbriteBundle\Eventbrite\Mapper');
+        $mapper->shouldReceive('map')->twice()->andReturn('#event1#', '#event2#');
+
+        $client = m::mock('stdClass');
+        $client->shouldReceive('getCommand')->with('user.events', array())->once()->andReturn($command);
+        $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
+
+        $this->object = new UserRepository($client, $mapper);
+        $result = $this->object->getEvents();
+
+        $this->assertInternalType('array', $result);
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $this->assertEquals('#event' . ($i + 1) . '#', $result[$i]);
+        }
     }
 
     /**
      * @covers SFBCN\EventbriteBundle\Entity\UserRepository::getVenues
-     * @todo   Implement testGetVenues().
      */
     public function testGetVenues()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
+        $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
+
+        $response = simplexml_load_string(<<<EOX
+<?xml version="1.0" encoding="UTF-8" ?>
+<venues>
+    <venue><id>1</id></venue>
+    <venue><id>2</id></venue>
+</venues>
+EOX
         );
+
+        $mapper = m::mock('\SFBCN\EventbriteBundle\Eventbrite\Mapper');
+        $mapper->shouldReceive('map')->twice()->andReturn('#venue1#', '#venue2#');
+
+        $client = m::mock('stdClass');
+        $client->shouldReceive('getCommand')->with('user.venues', array())->once()->andReturn($command);
+        $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
+
+        $this->object = new UserRepository($client, $mapper);
+        $result = $this->object->getVenues();
+
+        $this->assertInternalType('array', $result);
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $this->assertEquals('#venue' . ($i + 1) . '#', $result[$i]);
+        }
     }
 
     /**
      * @covers SFBCN\EventbriteBundle\Entity\UserRepository::getOrganizers
-     * @todo   Implement testGetOrganizers().
      */
     public function testGetOrganizers()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
+        $command = m::mock('\Guzzle\Service\Command\AbstractCommand');
+
+        $response = simplexml_load_string(<<<EOX
+<?xml version="1.0" encoding="UTF-8" ?>
+<organizers>
+    <organizer><id>1</id></organizer>
+    <organizer><id>2</id></organizer>
+</organizers>
+EOX
         );
+
+        $mapper = m::mock('\SFBCN\EventbriteBundle\Eventbrite\Mapper');
+        $mapper->shouldReceive('map')->twice()->andReturn('#organizer1#', '#organizer2#');
+
+        $client = m::mock('stdClass');
+        $client->shouldReceive('getCommand')->with('user.organizers', array())->once()->andReturn($command);
+        $client->shouldReceive('execute')->with($command)->once()->andReturn($response);
+
+        $this->object = new UserRepository($client, $mapper);
+        $result = $this->object->getOrganizers();
+
+        $this->assertInternalType('array', $result);
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $this->assertEquals('#organizer' . ($i + 1) . '#', $result[$i]);
+        }
     }
 }

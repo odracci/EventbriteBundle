@@ -226,7 +226,12 @@ class Discount
      */
     public function getTickets()
     {
-        return $this->tickets;
+        $tickets = $this->tickets;
+        if (is_array($tickets)) {
+            $tickets = implode(',', $tickets);
+        }
+
+        return $tickets;
     }
 
     /**
@@ -235,7 +240,7 @@ class Discount
     public function addTicket(\SFBCN\EventbriteBundle\Entity\Ticket $ticket)
     {
         if (!in_array($ticket->getId(), $this->tickets)) {
-            $this->tickets[] = $ticket;
+            $this->tickets[] = $ticket->getId();
         }
     }
 
@@ -256,6 +261,14 @@ class Discount
     }
 
     /**
+     * Class constructor. Initializes the tickets array
+     */
+    public function __construct()
+    {
+        $this->tickets = array();
+    }
+
+    /**
      * Serializes the discount entity into an array
      *
      * @return array
@@ -270,7 +283,7 @@ class Discount
             'code'                  => $this->getCode(),
             'amount_off'            => $this->getAmountOff(),
             'percent_off'           => $this->getPercentOff(),
-            'tickets'               => implode(',', $this->getTickets()),
+            'tickets'               => $this->getTickets(),
             'start_date'            => $this->getStartDate()->format('Y-m-d H:i:s'),
             'end_date'              => $this->getEndDate()->format('Y-m-d H:i:s'),
             'quantity_available'    => $this->getQuantityAvailable(),

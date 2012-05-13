@@ -103,6 +103,8 @@ class Organizer
 
     /**
      * Serializes to an array the organizer entity
+     *
+     * @return array
      */
     public function toArray()
     {
@@ -115,5 +117,7 @@ class Organizer
         if (null !== $this->getId()) {
             $result['id'] = $this->getId();
         }
+
+        return $result;
     }
 }
