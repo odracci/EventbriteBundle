@@ -9,6 +9,7 @@ parameters:
   eventbrite.organizers_class: SFBCN\EventbriteBundle\Entity\OrganizerRepository
   eventbrite.venues_class: SFBCN\EventbriteBundle\Entity\VenueRepository
   eventbrite.users_class: SFBCN\EventbriteBundle\Entity\UserRepository
+  eventbrite.forms.event.class: SFBCN\EventbriteBundle\Form\EventType
 
 services:
   eventbrite.client:
@@ -27,6 +28,11 @@ services:
   eventbrite.mapper:
     class: %eventbrite.mapper_class%
 
+  # Forms
+  eventbrite.forms.event:
+    class: %eventbrite.forms.event.class%
+
+  # Repositories
   eventbrite.abstract_repository:
     class:     %eventbrite.base_repository_class%
     abstract:  true
