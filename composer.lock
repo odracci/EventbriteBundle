@@ -1,5 +1,5 @@
 {
-    "hash": "02e7ba082d70bd894f538c3c6e949a84",
+    "hash": "5de01c7613539a44bce39d02453ef55c",
     "packages": [
         {
             "package": "doctrine/common",
@@ -13,21 +13,55 @@
         {
             "package": "symfony/event-dispatcher",
             "version": "dev-master",
-            "source-reference": "a032eb1b74c9e5f939ce5fe9a5a7d53e6d1a9bee"
+            "source-reference": "0b58a4019befc0bd038bc0ec0165101d5dd31754"
+        },
+        {
+            "package": "symfony/event-dispatcher",
+            "version": "dev-master",
+            "source-reference": "0b58a4019befc0bd038bc0ec0165101d5dd31754",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/validator",
             "version": "dev-master",
-            "source-reference": "704f655d060b14475d7bd2a0b6d653c70f88218a"
+            "source-reference": "cf46013f35ddb109c95aee97f74d5bd0f4d7e18b",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/validator",
+            "version": "dev-master",
+            "source-reference": "cf46013f35ddb109c95aee97f74d5bd0f4d7e18b"
         }
     ],
     "packages-dev": [
         {
             "package": "mockery/mockery",
             "version": "0.7.2"
+        },
+        {
+            "package": "symfony/form",
+            "version": "2.0.6"
+        },
+        {
+            "package": "symfony/locale",
+            "version": "dev-master",
+            "source-reference": "e6350bdf862577b82cfca3a0ebba6db7d45c9899",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/locale",
+            "version": "dev-master",
+            "source-reference": "e6350bdf862577b82cfca3a0ebba6db7d45c9899"
         }
     ],
     "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": [
 
     ]
 }

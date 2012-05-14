@@ -6,7 +6,8 @@
         "guzzle/guzzle": "v2.4.1"
     },
     "require-dev": {
-        "mockery/mockery": "0.7.2"
+        "mockery/mockery": "0.7.2",
+        "symfony/form": "2.0.*"
     },
     "authors": [
         {
