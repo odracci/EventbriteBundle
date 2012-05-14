@@ -2,6 +2,8 @@
 
 namespace SFBCN\EventbriteBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * A Eventbrite event entity
  *
@@ -20,51 +22,72 @@ class Event
      * The event ID
      *
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\MaxLength(255)
      */
     private $title;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank()
      */
     private $description;
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      */
     private $startDate;
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      */
     private $endDate;
 
     /**
      * @var \DateTimeZone
+     *
+     * @Assert\NotBlank()
      */
     private $timezone;
 
     /**
      * @var string
+     *
+     * @Assert\Url
      */
     private $url;
 
     /**
      * @var int
+     *
+     * @Assert\Choice(choices = {"Private", "Public"})
      */
     private $privacy;
 
     /**
      * @var string
+     *
+     * @Assert\Url()
      */
     private $personalizedUrl;
 
     /**
      * @var \SFBCN\EventbriteBundle\Entity\Venue
+     *
      */
     private $venue;
 
@@ -80,6 +103,8 @@ class Event
 
     /**
      * @var int
+     *
+     * @Assert\NotNull()
      */
     private $capacity;
 
@@ -90,6 +115,8 @@ class Event
 
     /**
      * @var string
+     *
+     * @Assert\Choice(choices = {"draft" => "Draft", "live" => "Live"})
      */
     private $status;
 
@@ -140,11 +167,15 @@ class Event
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      */
     private $created;
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      */
     private $modified;
 
