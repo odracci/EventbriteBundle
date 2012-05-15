@@ -67,14 +67,14 @@ class Event
     /**
      * @var string
      *
-     * @Assert\Url
+     * @Assert\Url()
      */
     private $url;
 
     /**
      * @var int
      *
-     * @Assert\Choice(choices = {"Private", "Public"})
+     * @Assert\Choice(choices = {"0" => "Private", "1" => "Public"})
      */
     private $privacy;
 
@@ -88,11 +88,16 @@ class Event
     /**
      * @var \SFBCN\EventbriteBundle\Entity\Venue
      *
+     * @Assert\NotNull()
+     * @Assert\Type(type="SFBCN\EventbriteBundle\Entity\Venue")
      */
     private $venue;
 
     /**
      * @var \SFBCN\EventbriteBundle\Entity\Organizer
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="SFBCN\EventbriteBundle\Entity\Organizer")
      */
     private $organizer;
 
