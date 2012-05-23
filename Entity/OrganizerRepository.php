@@ -26,7 +26,7 @@ class OrganizerRepository extends AbstractRepository
         $response = $this->executeCommand('organizer.events', array('id' => $organizer->getId()));
 
         $events = array();
-        foreach ($response->events as $event) {
+        foreach ($response->event as $event) {
             $events[] = $this->getMapper()->map($event);
         }
 

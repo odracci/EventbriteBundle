@@ -47,6 +47,9 @@ class EventTypeTest extends \PHPUnit_Framework_TestCase
         $formBuilder->shouldReceive('add')->with('end_date', 'datetime')->once()->ordered()->andReturn($formBuilder);
         $formBuilder->shouldReceive('add')->with('timezone', 'timezone')->once()->ordered()->andReturn($formBuilder);
         $formBuilder->shouldReceive('add')->with('privacy', 'choice', array('choices' => array('0' => 'Private', '1' => 'Public')))->once()->ordered()->andReturn($formBuilder);
+        $formBuilder->shouldReceive('add')->with('personalized_url', 'text')->once()->ordered()->andReturn($formBuilder);
+        $formBuilder->shouldReceive('add')->with('venue', 'venue')->once()->ordered()->andReturn($formBuilder);
+        $formBuilder->shouldReceive('add')->with('organizer', 'organizer')->once()->ordered()->andReturn($formBuilder);
         $formBuilder->shouldReceive('add')->with('capacity', 'integer')->once()->ordered()->andReturn($formBuilder);
         $formBuilder->shouldReceive('add')->with('currency', 'text')->once()->ordered()->andReturn($formBuilder);
         $formBuilder->shouldReceive('add')->with('status', 'text')->once()->ordered()->andReturn($formBuilder);
@@ -76,4 +79,3 @@ class EventTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->object->getDefaultOptions(array()));
     }
 }
-?>

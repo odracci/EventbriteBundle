@@ -5,6 +5,11 @@ namespace SFBCN\EventbriteBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
+/**
+ * A form type to persist the Event entity
+ *
+ * @author Christian Soronellas <theunic@gmail.com>
+ */
 class EventType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
@@ -16,6 +21,9 @@ class EventType extends AbstractType
             ->add('end_date',           'datetime')
             ->add('timezone',           'timezone')
             ->add('privacy',            'choice', array('choices' => array('0' => 'Private', '1' => 'Public')))
+            ->add('personalized_url',   'text')
+            ->add('venue',              'venue')
+            ->add('organizer',          'organizer')
             ->add('capacity',           'integer')
             ->add('currency',           'text')
             ->add('status',             'text')

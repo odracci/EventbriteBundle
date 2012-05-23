@@ -81,7 +81,7 @@ class Event
     /**
      * @var string
      *
-     * @Assert\Url()
+     * @Assert\MaxLength(255)
      */
     private $personalizedUrl;
 
@@ -499,10 +499,14 @@ class Event
     }
 
     /**
-     * @param \DateTimeZone $timezone
+     * @param string|\DateTimeZone $timezone
      */
-    public function setTimezone(\DateTimeZone $timezone)
+    public function setTimezone($timezone)
     {
+        if (!($timezone instanceof \DateTimeZone)) {
+            $timezone = new \DateTimeZone($timezone);
+        }
+
         $this->timezone = $timezone;
     }
 
