@@ -41,34 +41,34 @@ services:
   eventbrite.forms.choice_list.venue:
     class: %eventbrite.forms.choice_list.venue.class%
     arguments:
-      - [@eventbrite.users]
+      [@eventbrite.users]
 
   eventbrite.forms.choice_list.organizer:
     class: %eventbrite.forms.choice_list.organizer.class%
     arguments:
-      - [@eventbrite.users]
+      [@eventbrite.users]
 
   eventbrite.forms.data_transformer.venue_to_id:
     class: %eventbrite.forms.data_transformer.venue_to_id.class%
     arguments:
-      - [@eventbrite.venues]
+      [@eventbrite.venues]
 
   eventbrite.forms.data_transformer.organizer_to_id:
     class: %eventbrite.forms.data_transformer.organizer_to_id.class%
     arguments:
-      - [@eventbrite.organizers]
+      [@eventbrite.organizers]
 
   eventbrite.forms.type.venue:
     class: %eventbrite.forms.type.venue.class%
     arguments:
-      - [@eventbrite.forms.choice_list.venue, @eventbrite.forms.data_transformer.venue_to_id]
+      [@eventbrite.forms.choice_list.venue, @eventbrite.forms.data_transformer.venue_to_id]
     tags:
       - { name: form.type, alias: venue }
 
   eventbrite.forms.type.organizer:
     class: %eventbrite.forms.type.organizer.class%
     arguments:
-      - [@eventbrite.forms.choice_list.organizer, @eventbrite.forms.data_transformer.organizer_to_id]
+      [@eventbrite.forms.choice_list.organizer, @eventbrite.forms.data_transformer.organizer_to_id]
     tags:
       - { name: form.type, alias: organizer }
 

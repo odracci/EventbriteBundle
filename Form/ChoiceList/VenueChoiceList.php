@@ -16,7 +16,7 @@ class VenueChoiceList implements ChoiceListInterface
     /**
      * @var \SFBCN\EventbriteBundle\Entity\UserRepository
      */
-    private $organizerRepository;
+    private $userRepository;
 
     /**
      * @var bool
@@ -31,17 +31,17 @@ class VenueChoiceList implements ChoiceListInterface
     /**
      * @param \SFBCN\EventbriteBundle\Entity\UserRepository $userRepository
      */
-    public function setOrganizerRepository($userRepository)
+    public function setUserRepository($userRepository)
     {
-        $this->organizerRepository = $userRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
      * @return \SFBCN\EventbriteBundle\Entity\UserRepository
      */
-    public function getOrganizerRepository()
+    public function getUserRepository()
     {
-        return $this->organizerRepository;
+        return $this->userRepository;
     }
 
     /**
@@ -59,7 +59,7 @@ class VenueChoiceList implements ChoiceListInterface
      */
     public function __construct(\SFBCN\EventbriteBundle\Entity\UserRepository $userRepository)
     {
-        $this->setOrganizerRepository($userRepository);
+        $this->setUserRepository($userRepository);
     }
 
     /**
@@ -83,7 +83,7 @@ class VenueChoiceList implements ChoiceListInterface
     {
         $this->loaded = true;
 
-        $venues = $this->getOrganizerRepository()->getVenues();
+        $venues = $this->getUserRepository()->getVenues();
 
         foreach ($venues as $venue) {
             $this->choices[$venue->getId()] = $venue->getName();
