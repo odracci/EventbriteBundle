@@ -41,12 +41,12 @@ services:
   eventbrite.forms.choice_list.venue:
     class: %eventbrite.forms.choice_list.venue.class%
     arguments:
-      - [@evenbrite.users]
+      - [@eventbrite.users]
 
   eventbrite.forms.choice_list.organizer:
     class: %eventbrite.forms.choice_list.organizer.class%
     arguments:
-      - [@evenbrite.users]
+      - [@eventbrite.users]
 
   eventbrite.forms.data_transformer.venue_to_id:
     class: %eventbrite.forms.data_transformer.venue_to_id.class%
