@@ -76,6 +76,10 @@ class OrganizerToIdTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
+        if (null === $value || '' === $value) {
+            return '';
+        }
+
         if (!($value instanceof Organizer)) {
             throw new UnexpectedTypeException($value, 'SFBCN\EventbriteBundle\Entity\Organizer');
         }
@@ -110,6 +114,10 @@ class OrganizerToIdTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        if (null === $value || '' === $value) {
+            return '';
+        }
+
         if (!is_string($value)) {
             throw new UnexpectedTypeException($value, 'string');
         }

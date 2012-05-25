@@ -76,6 +76,10 @@ class VenueToIdTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
+        if (null === $value || '' === $value) {
+            return '';
+        }
+
         if (!($value instanceof Venue)) {
             throw new UnexpectedTypeException($value, 'SFBCN\EventbriteBundle\Entity\Venue');
         }
@@ -110,6 +114,10 @@ class VenueToIdTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        if (null === $value || '' === $value) {
+            return '';
+        }
+
         if (!is_string($value)) {
             throw new UnexpectedTypeException($value, 'string');
         }
