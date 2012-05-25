@@ -12,10 +12,10 @@ parameters:
   eventbrite.forms.event.class: SFBCN\EventbriteBundle\Form\EventType
   eventbrite.forms.type.venue.class: SFBCN\EventbriteBundle\Form\Type\VenueType
   eventbrite.forms.choice_list.venue.class: SFBCN\EventbriteBundle\Form\ChoiceList\VenueChoiceList
-  eventbrite.forms.data_transformer.venue_to_id.class: SFBCN\EventbriteBundle\Form\DataTransformer\VenueToIdTransfomer
+  eventbrite.forms.data_transformer.venue_to_id.class: SFBCN\EventbriteBundle\Form\DataTransformer\VenueToIdTransformer
   eventbrite.forms.type.organizer.class: SFBCN\EventbriteBundle\Form\Type\OrganizerType
   eventbrite.forms.choice_list.organizer.class: SFBCN\EventbriteBundle\Form\ChoiceList\OrganizerChoiceList
-  eventbrite.forms.data_transformer.organizer_to_id.class: SFBCN\EventbriteBundle\Form\DataTransformer\OrganizerToIdTransfomer
+  eventbrite.forms.data_transformer.organizer_to_id.class: SFBCN\EventbriteBundle\Form\DataTransformer\OrganizerToIdTransformer
 
 services:
   eventbrite.client:
